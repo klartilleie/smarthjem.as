@@ -1,28 +1,28 @@
 import { Card, CardContent } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
-import { Zap, Compass, Wrench, ArrowRight } from "lucide-react";
+import { Home, Building, TreePine, ArrowRight } from "lucide-react";
 
 const services = [
   {
-    icon: Zap,
-    title: "Elektriske Installasjoner",
-    description: "Sertifiserte elektrikere utfører alle typer elektrisk arbeid - fra nyinstallasjon til oppgraderinger og vedlikehold.",
-    badge: "Sertifisert",
-    gradient: "from-amber-500/20 to-orange-500/20",
-  },
-  {
-    icon: Compass,
-    title: "Rådgivning Innen Eiendom",
-    description: "Få ekspertråd om kjøp, salg, utleie eller utvikling av eiendom. Vi hjelper deg med å ta de beste beslutningene.",
-    badge: "Eksperter",
+    icon: TreePine,
+    title: "Hytter",
+    description: "Oppdag våre koselige hytter i naturskjønne omgivelser. Perfekt for ferie og avkobling med familie og venner.",
+    badge: "Populært",
     gradient: "from-emerald-500/20 to-teal-500/20",
   },
   {
-    icon: Wrench,
-    title: "Vedlikeholdstjenester",
-    description: "Komplett vedlikehold av eiendommer - fra løpende drift til større rehabiliteringsprosjekter.",
-    badge: "Helhetlig",
-    gradient: "from-purple-500/20 to-pink-500/20",
+    icon: Building,
+    title: "Leiligheter",
+    description: "Moderne og komfortable leiligheter på attraktive steder. Ideelt for både korte og lengre opphold.",
+    badge: "Sentralt",
+    gradient: "from-amber-500/20 to-orange-500/20",
+  },
+  {
+    icon: Home,
+    title: "Hus",
+    description: "Romslige feriehus med plass til hele familien. Nyt privatliv og hjemlige omgivelser på ferie.",
+    badge: "Familievennlig",
+    gradient: "from-blue-500/20 to-cyan-500/20",
   },
 ];
 
@@ -37,18 +37,18 @@ export default function Services() {
       
       <div className="max-w-7xl mx-auto px-6 sm:px-8 relative">
         <div className="text-center mb-16 md:mb-20">
-          <Badge variant="secondary" className="mb-6 px-4 py-1.5 text-sm">Våre Tjenester</Badge>
+          <Badge variant="secondary" className="mb-6 px-4 py-1.5 text-sm">Vårt Utvalg</Badge>
           <h2 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-bold mb-6 tracking-tight">
-            Profesjonelle Løsninger
-            <span className="block text-primary mt-2">Innen Eiendom og Strøm</span>
+            Ferieutleie
+            <span className="block text-primary mt-2">For Enhver Smak</span>
           </h2>
           <p className="text-muted-foreground text-lg md:text-xl max-w-2xl mx-auto leading-relaxed">
-            Vi tilbyr et bredt spekter av tjenester, skreddersydd for dine behov, 
-            med fokus på kvalitet og service.
+            Vi tilbyr et bredt utvalg av hytter, leiligheter og hus 
+            på fantastiske steder i Sør-Norge.
           </p>
         </div>
 
-        <div className="grid md:grid-cols-2 gap-6 lg:gap-8">
+        <div className="grid md:grid-cols-3 gap-6 lg:gap-8">
           {services.map((service, index) => (
             <Card
               key={index}
