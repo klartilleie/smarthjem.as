@@ -20,7 +20,7 @@ export default function Hero() {
       
       <div className="relative z-10 max-w-6xl mx-auto px-6 sm:px-8 py-20">
         <div className="backdrop-blur-xl bg-white/5 border border-white/10 rounded-3xl p-8 md:p-12 lg:p-16">
-          <div className="flex items-center gap-2 mb-8">
+          <div className="flex items-center justify-center gap-2 mb-8">
             <div className="h-px flex-1 bg-gradient-to-r from-transparent via-primary/50 to-transparent max-w-24" />
             <span className="text-primary font-medium tracking-wide text-sm uppercase flex items-center gap-2">
               <Sparkles className="w-4 h-4" />
