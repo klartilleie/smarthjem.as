@@ -61,13 +61,21 @@ export default function Booking() {
       <main className="flex-1 pt-20">
         <section className="bg-card border-b border-border py-12">
           <div className="max-w-7xl mx-auto px-4 sm:px-6">
-            <Badge variant="secondary" className="mb-4">BEDS24 Integrasjon</Badge>
+            <Badge variant="secondary" className="mb-4">Våre Eiendommer</Badge>
             <h1 className="text-3xl sm:text-4xl md:text-5xl font-bold mb-4">
               Finn Din Perfekte <span className="text-primary">Feriebolig</span>
             </h1>
-            <p className="text-muted-foreground text-lg max-w-2xl">
+            <p className="text-muted-foreground text-lg max-w-2xl mb-6">
               Utforsk vårt utvalg av premium hytter og eiendommer. Alle inkluderer nøkkelfri adgang, høyhastighets internett og profesjonell rengjøring.
             </p>
+            <div className="flex flex-wrap items-center gap-3 text-sm text-muted-foreground">
+              <span>Tilgjengelig på:</span>
+              <Badge variant="outline">Booking.com</Badge>
+              <Badge variant="outline">Airbnb</Badge>
+              <Badge variant="outline">VRBO</Badge>
+              <Badge variant="outline">Finn.no</Badge>
+              <span className="text-xs">og flere plattformer</span>
+            </div>
           </div>
         </section>
 

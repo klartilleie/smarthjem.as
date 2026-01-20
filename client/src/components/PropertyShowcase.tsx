@@ -34,6 +34,12 @@ export default function PropertyShowcase() {
               Oppdag Våre
               <span className="block text-primary mt-2">Tilgjengelige Eiendommer</span>
             </h2>
+            <div className="flex flex-wrap items-center gap-2 mt-4 text-sm text-muted-foreground">
+              <span>Også tilgjengelig på:</span>
+              <Badge variant="outline" className="text-xs">Booking.com</Badge>
+              <Badge variant="outline" className="text-xs">Airbnb</Badge>
+              <Badge variant="outline" className="text-xs">Finn.no</Badge>
+            </div>
           </div>
           <Link href="/booking">
             <Button variant="outline" size="lg" className="gap-2" data-testid="button-view-all">
