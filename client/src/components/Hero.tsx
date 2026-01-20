@@ -42,7 +42,7 @@ export default function Hero() {
             <Link href="/booking">
               <Button
                 size="lg"
-                className="min-w-[220px] text-base font-semibold rounded-full h-14 gap-2"
+                className="min-w-[220px] gap-2"
                 data-testid="button-hero-properties"
               >
                 Se Våre Eiendommer
@@ -53,7 +53,7 @@ export default function Hero() {
               <Button
                 variant="outline"
                 size="lg"
-                className="min-w-[220px] text-base font-semibold rounded-full h-14 bg-white/5 border-white/20 text-white backdrop-blur-sm"
+                className="min-w-[220px] bg-white/5 border-white/20 text-white backdrop-blur-sm"
                 data-testid="button-hero-services"
               >
                 Utforsk Tjenester

@@ -39,7 +39,7 @@ export default function Header() {
       data-testid="header"
     >
       <div className="max-w-7xl mx-auto px-6 sm:px-8">
-        <div className="flex items-center justify-between h-18 md:h-20">
+        <div className="flex items-center justify-between gap-4 h-18 md:h-20">
           <Link href="/" data-testid="link-logo">
             <img
               src={logoImage}
@@ -53,10 +53,8 @@ export default function Header() {
               <Link key={link.href} href={link.href}>
                 <Button
                   variant="ghost"
-                  className={`text-sm font-medium rounded-full px-4 ${
-                    !isScrolled && isHome
-                      ? "text-white/90 hover:text-white hover:bg-white/10"
-                      : ""
+                  className={`text-sm font-medium ${
+                    !isScrolled && isHome ? "text-white/90" : ""
                   }`}
                   data-testid={`link-${link.label.toLowerCase().replace(/\s+/g, "-")}`}
                 >
@@ -71,14 +69,14 @@ export default function Header() {
               variant="ghost"
               size="icon"
               onClick={toggleTheme}
-              className={`rounded-full ${!isScrolled && isHome ? "text-white hover:bg-white/10" : ""}`}
+              className={!isScrolled && isHome ? "text-white" : ""}
               data-testid="button-theme-toggle"
             >
               {theme === "dark" ? <Sun className="h-5 w-5" /> : <Moon className="h-5 w-5" />}
             </Button>
 
             <Link href="/#kontakt" className="hidden lg:block">
-              <Button className="rounded-full px-6" data-testid="button-contact-header">
+              <Button data-testid="button-contact-header">
                 Kontakt Oss
               </Button>
             </Link>
@@ -88,7 +86,7 @@ export default function Header() {
                 <Button
                   variant="ghost"
                   size="icon"
-                  className={`rounded-full ${!isScrolled && isHome ? "text-white hover:bg-white/10" : ""}`}
+                  className={!isScrolled && isHome ? "text-white" : ""}
                   data-testid="button-mobile-menu"
                 >
                   <Menu className="h-6 w-6" />
@@ -104,7 +102,7 @@ export default function Header() {
                     >
                       <Button
                         variant="ghost"
-                        className="w-full justify-start text-base rounded-xl h-12"
+                        className="w-full justify-start text-base"
                         data-testid={`mobile-link-${link.label.toLowerCase().replace(/\s+/g, "-")}`}
                       >
                         {link.label}
@@ -112,7 +110,7 @@ export default function Header() {
                     </Link>
                   ))}
                   <Link href="/#kontakt" onClick={() => setMobileOpen(false)}>
-                    <Button className="w-full mt-4 rounded-xl h-12" data-testid="mobile-button-contact">
+                    <Button className="w-full mt-4" data-testid="mobile-button-contact">
                       Kontakt Oss
                     </Button>
                   </Link>

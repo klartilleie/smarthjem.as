@@ -93,7 +93,7 @@ export default function Contact() {
                   <p className="text-muted-foreground mb-6 max-w-sm">
                     Vi har mottatt meldingen din og vil svare innen 24 timer.
                   </p>
-                  <Button variant="outline" onClick={() => setSubmitted(false)} className="rounded-full" data-testid="button-new-message">
+                  <Button variant="outline" onClick={() => setSubmitted(false)} data-testid="button-new-message">
                     Send en ny melding
                   </Button>
                 </div>
@@ -206,7 +206,7 @@ export default function Contact() {
                       <Button
                         type="submit"
                         size="lg"
-                        className="w-full gap-2 rounded-full h-14"
+                        className="w-full gap-2"
                         disabled={mutation.isPending}
                         data-testid="button-contact-submit"
                       >

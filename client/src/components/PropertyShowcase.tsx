@@ -47,7 +47,7 @@ export default function PropertyShowcase() {
       <div className="absolute inset-0 bg-gradient-to-b from-transparent via-primary/5 to-transparent pointer-events-none" />
       
       <div className="max-w-7xl mx-auto px-6 sm:px-8 relative">
-        <div className="flex flex-col md:flex-row md:items-end justify-between gap-6 mb-12 md:mb-16">
+        <div className="flex flex-col md:flex-row md:items-end justify-between gap-6 flex-wrap mb-12 md:mb-16">
           <div>
             <Badge variant="secondary" className="mb-6 px-4 py-1.5 text-sm">Utvalgte Eiendommer</Badge>
             <h2 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-bold tracking-tight">
@@ -56,7 +56,7 @@ export default function PropertyShowcase() {
             </h2>
           </div>
           <Link href="/booking">
-            <Button variant="outline" size="lg" className="gap-2 rounded-full" data-testid="button-view-all">
+            <Button variant="outline" size="lg" className="gap-2" data-testid="button-view-all">
               Vis Alle Eiendommer
               <ArrowRight className="w-4 h-4" />
             </Button>
@@ -91,7 +91,7 @@ export default function PropertyShowcase() {
                 </div>
               </div>
               <CardContent className="p-5">
-                <div className="flex items-center justify-between">
+                <div className="flex items-center justify-between gap-4">
                   <div className="flex items-center gap-4 text-sm text-muted-foreground">
                     <span className="flex items-center gap-1.5 bg-muted px-2.5 py-1 rounded-full">
                       <Bed className="w-4 h-4" />
@@ -103,7 +103,7 @@ export default function PropertyShowcase() {
                     </span>
                   </div>
                   <Link href={`/booking?property=${property.id}`}>
-                    <Button className="rounded-full" data-testid={`button-book-${property.id}`}>
+                    <Button data-testid={`button-book-${property.id}`}>
                       Book
                     </Button>
                   </Link>
