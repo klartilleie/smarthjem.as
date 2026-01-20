@@ -1,15 +1,8 @@
 import { Card, CardContent } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
-import { Building2, Zap, Compass, Wrench, ArrowRight } from "lucide-react";
+import { Zap, Compass, Wrench, ArrowRight } from "lucide-react";
 
 const services = [
-  {
-    icon: Building2,
-    title: "Utleie av Kontorlokaler",
-    description: "Vi tilbyr fleksible og moderne kontorlokaler tilpasset din bedrifts behov. Fra enkeltplasser til hele etasjer.",
-    badge: "Fleksibelt",
-    gradient: "from-blue-500/20 to-cyan-500/20",
-  },
   {
     icon: Zap,
     title: "Elektriske Installasjoner",
