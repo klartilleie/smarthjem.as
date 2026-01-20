@@ -1,127 +1,147 @@
-# Design Guidelines - Smart Hjem AS
+# Design Guidelines - Smart Hjem AS (2026 Update)
 
 ## Design Approach
-**Reference-Based:** Airbnb-inspired hospitality design with Nordic minimalism. Clean, trustworthy aesthetic that emphasizes property quality and seamless service delivery.
+**Reference-Based:** Airbnb + Norgesbooking fusion with 2026 premium Scandinavian aesthetic. Glassmorphism-driven interface featuring floating cards, backdrop blur effects, and gradient overlays. Dark mode primary with sophisticated ambient lighting.
 
 ## Typography
-- **Primary Font:** Inter (Google Fonts) - modern, professional
-- **Headings:** 600-700 weight, sizes: text-4xl/5xl/6xl
-- **Body:** 400 weight, text-base/lg
-- **Accents:** 500 weight for CTAs and highlights
+- **Primary Font:** Inter (Google Fonts) - weights 400-700
+- **Hero/Display:** text-5xl to text-7xl, weight 700, tight leading
+- **Section Headings:** text-3xl to text-4xl, weight 600
+- **Body:** text-base to text-lg, weight 400
+- **Accents:** weight 500-600 for emphasis
 
 ## Layout System
-**Spacing Units:** Tailwind 4, 6, 8, 12, 16, 24 for consistent rhythm
-- Sections: py-16 to py-24 (desktop), py-12 (mobile)
-- Component spacing: gap-6 to gap-8
-- Container: max-w-7xl with px-4/6
+**Spacing Units:** Tailwind 6, 8, 12, 16, 24, 32
+- Sections: py-24 to py-32 (desktop), py-16 (mobile)
+- Generous gaps: gap-8 to gap-12
+- Container: max-w-7xl, px-6/8
 
 ## Page Structure
 
-### Main Landing Page (6-7 sections)
+### Main Landing Page (7 sections)
 
-**Hero Section (100vh)**
-- Full-width hero image showcasing premium Norwegian property
-- Centered content overlay with blurred-background button container
-- H1: "Nøkkelfri Utleie – Vi Tar Oss av Alt" 
-- Subheading explaining turnkey concept
-- Primary CTA: "Se Våre Eiendommer" + Secondary: "Hvordan Det Fungerer"
-- Trust indicator: "200+ fornøyde utleiere"
+**Hero Section (90vh)**
+- Full-width premium Norwegian property image (modern architecture, dramatic lighting)
+- Glassmorphic overlay card (backdrop-blur-xl, semi-transparent)
+- Large display text: "Fremtidens Eiendomsløsninger"
+- Subheading: Premium property services tagline
+- Dual CTAs with blurred backgrounds
+- Floating trust badges: client count, years in business
 
-**Services Overview (3-column grid on desktop)**
-- Icon + title + description cards for: Rengjøring, Booking & Administrasjon, Teknisk Support
-- Each card includes "Alt inkludert" badge
-- Soft shadows, rounded-xl corners
+**Services Grid (3-column on desktop, stacked mobile)**
+- Four service cards: Property Consulting, Office Rentals, Electrical Installations, Maintenance
+- Each card: floating design with glassmorphic border, icon, title, 2-3 line description
+- Subtle gradient accents on hover
+- "Utforsk Tjeneste" link per card
 
-**Property Showcase (Masonry/Grid Layout)**
-- 2-3 column grid of featured properties
-- Large property images with overlay info (location, beds, price)
-- "Vis Alle" CTA leading to booking page
+**Featured Properties/Offices Showcase**
+- 2-column asymmetric layout alternating image-left/text-right
+- Large property images (aspect-ratio 16:9)
+- Overlaid metadata cards with backdrop blur
+- Property specs in icon grid format
 
-**How It Works (Timeline/Steps Section)**
-- 4-step visual process: Registrering → Oppsett → Vi Håndterer Alt → Du Mottar Inntekt
-- Icon-driven with connecting lines/flow
+**Why Choose Smart Hjem (Visual Timeline)**
+- Horizontal scroll/grid showing 4-5 key differentiators
+- Icon-led cards with bold numbers (01, 02, etc.)
+- Short punchy value propositions
+- Supporting imagery or illustrations
 
-**Testimonials (2-column layout)**
-- Customer photos with quotes
-- Star ratings and property types
-- "Verified lessor" badges
+**Client Testimonials**
+- 3-column card grid (2-column tablet, 1-column mobile)
+- Customer photos, company logos, star ratings
+- Quote cards with glassmorphic treatment
+- "Verified Partner" badges
 
-**Pricing/Package Comparison**
-- Side-by-side cards showing service tiers
-- Clear feature lists with checkmarks
-- "Kontakt Oss" CTAs
+**Technology & Innovation Section**
+- Split layout: Visual (smart home tech imagery) + Content
+- Feature list with checkmark icons
+- Integration badges (if applicable)
+- "Future-Ready Solutions" messaging
 
-**Contact/CTA Section**
-- Split layout: Contact form (left) + Quick info/map (right)
-- Office hours, response time guarantee
-- Alternative contact methods (phone, email)
+**Contact & CTA Footer Section**
+- Two-column split: Contact form (glassmorphic card) + Office info/map
+- Form fields with floating labels
+- Office hours, response guarantee
+- Social links, trust certifications
 
-### Booking Page
+### Services Detail Page (template for each service)
 
-**Search/Filter Bar (Sticky)**
-- Date range picker
-- Guest count selector
-- Location filter
-- "BEDS24 Powered" subtle badge
+**Service Hero**
+- Large image relevant to service (80vh)
+- Overlaid title and description in glassmorphic container
+- Breadcrumb navigation
 
-**Property Grid (Card-based)**
-- 2-3 column responsive grid
-- Each card: Large image, title, location, capacity, nightly rate
-- Quick view overlay on hover
-- "Book Now" primary action
+**Service Benefits Grid**
+- 3-4 column feature highlights
+- Icon-driven cards with gradient accents
 
-**Property Detail Modal/Page**
-- Image gallery (main + thumbnails)
-- Full property details from BEDS24
-- Amenities icons grid
-- Calendar availability view
-- Booking form integration
-- Review section
+**Process/How It Works**
+- Step-by-step cards with connecting visual flow
+- Timeline-style layout with numbers
+
+**Pricing Tiers (if applicable)**
+- Side-by-side comparison cards
+- Feature checkmark lists
+- Prominent CTA buttons
+
+**Case Studies/Portfolio**
+- Grid of completed projects with before/after imagery
+- Lightbox gallery functionality
+
+**CTA Section**
+- Full-width gradient background
+- Centered call-to-action with form or contact button
 
 ## Component Library
 
 **Navigation**
-- Transparent header on hero, solid white on scroll
-- Logo left, menu center/right
-- Sticky behavior
-- Mobile: Hamburger menu
+- Glassmorphic header with backdrop-blur
+- Logo left, menu items center-right
+- Sticky with subtle shadow on scroll
+- Hamburger menu mobile with slide-in drawer
 
 **Cards**
-- Rounded-2xl corners
-- Subtle shadow (shadow-sm hover:shadow-lg transition)
-- Image aspect ratio: 4:3 for properties
+- Glassmorphic treatment: backdrop-blur-md, border with gradient
+- Rounded-3xl corners
+- Floating effect with subtle shadow
+- Smooth transform on hover (scale-105 or lift)
 
 **Buttons**
-- Primary: Solid with hover lift effect
-- Secondary: Outline style
-- On images: backdrop-blur-md bg-white/30 treatment
-- Large touch targets (min h-12)
+- Primary: Solid with gradient accent, rounded-full
+- Secondary: Glassmorphic with border
+- On images: backdrop-blur-lg with semi-transparent background
+- Large touch targets (min-h-14)
 
 **Forms**
+- Glassmorphic input fields with subtle borders
 - Floating labels
-- Clear validation states
-- Grouped related fields
-- Prominent submit buttons
+- Clear error/success states
+- Grouped sections with dividers
 
-**Modals/Overlays**
-- Dark backdrop (bg-black/50)
-- Centered, max-w-4xl
-- Smooth slide-up animation
-- Close button top-right
+**Modals**
+- Centered with max-w-3xl
+- Glassmorphic backdrop
+- Slide-up animation
+- Close button with backdrop-blur
 
 ## Images
 
-**Hero Image:** Stunning Norwegian cabin/property exterior at golden hour or interior with large windows showing nature views. Professional, aspirational quality.
+**Hero:** Striking Norwegian property - modern architectural design with large windows, dramatic sunset/golden hour lighting, or premium office interior with city views. Ultra-high resolution, aspirational quality.
 
-**Property Images:** High-quality interior and exterior shots of various rental properties (modern cabins, apartments, houses). Bright, welcoming, clean aesthetic.
+**Service Images:** Professional photos of technicians, consultants, modern office spaces, smart home technology installations. Clean, well-lit, professional.
 
-**Service Icons:** Use Heroicons for service indicators, amenities, and UI elements throughout.
+**Property Showcase:** Mix of commercial and residential properties - contemporary Nordic architecture, interiors with natural light, outdoor spaces.
 
-**Lifestyle Images:** Families/couples enjoying properties, local Norwegian nature/activities for testimonial and "why choose us" sections.
+**Icons:** Heroicons throughout for UI consistency.
+
+**Ambient Graphics:** Subtle gradient mesh backgrounds, abstract shapes for visual interest without distraction.
 
 ## Key Principles
-- **Trust & Transparency:** Clear pricing, verified reviews, professional imagery
-- **Scandinavian Aesthetic:** Clean lines, ample whitespace, nature-inspired without being rustic
-- **Mobile-First:** Booking flow optimized for mobile users
-- **Performance:** Lazy-load property images, optimize for fast load times
-- **Accessibility:** High contrast ratios, clear focus states, semantic HTML
+- **Glassmorphism First:** Floating cards, backdrop blur, translucent layers create depth
+- **Bold Typography:** Large display text creates immediate impact
+- **Generous Whitespace:** py-24+ sections, breathing room between elements
+- **Subtle Animation:** Hover lifts, smooth transitions - never distracting
+- **Dark Mode Native:** Deep backgrounds with light text, gradient accents
+- **Premium Feel:** High-quality imagery, sophisticated layouts, attention to micro-details
+- **Mobile Optimization:** Touch-friendly, readable text, stackable cards
+- **Accessibility:** Maintain contrast ratios in dark mode, clear focus states, semantic structure

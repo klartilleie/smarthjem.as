@@ -1,91 +1,87 @@
 import { Card, CardContent } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
-import { Avatar, AvatarFallback } from "@/components/ui/avatar";
-import { Star, Quote } from "lucide-react";
+import { Quote, Star, CheckCircle } from "lucide-react";
 
 const testimonials = [
   {
-    name: "Erik Johansen",
-    location: "Hytte i Hemsedal",
+    name: "Elisabeth M.",
+    role: "Eier av utleiebolig",
+    quote: "Tjenestene fra Smart Hjem AS har overgått alle mine forventninger. Jeg følte meg ivaretatt fra start til slutt!",
     rating: 5,
-    text: "Smart Hjem har fullstendig forandret utleieopplevelsen min. Jeg får stabile inntekter uten å måtte bekymre meg for noe. Profesjonelle fra dag én!",
-    initials: "EJ",
+    initials: "EM",
   },
   {
-    name: "Maria Olsen",
-    location: "Leilighet i Oslo",
+    name: "Jonas L.",
+    role: "Bedriftsleder",
+    quote: "Profesjonaliteten og oppmerksomheten på detaljer var helt enestående. Jeg anbefaler dem på det varmeste!",
     rating: 5,
-    text: "Den nøkkelfrie løsningen er genial. Gjestene elsker det, og jeg slipper stresset med nøkler. Rengjøringsteamet deres er også fantastisk.",
-    initials: "MO",
+    initials: "JL",
   },
   {
-    name: "Anders Berg",
-    location: "Sjøhytte i Søgne",
+    name: "Karin S.",
+    role: "Utleier",
+    quote: "En sømløs opplevelse fra start til slutt! Tjenestene deres gjorde prosessen enkel og bekymringsfri.",
     rating: 5,
-    text: "Jeg var skeptisk først, men resultatene taler for seg selv. Høyere belegg og bedre anmeldelser enn noensinne. Anbefales på det sterkeste!",
-    initials: "AB",
-  },
-  {
-    name: "Karin Haugen",
-    location: "Fjellstue i Trysil",
-    rating: 5,
-    text: "Kommunikasjonen er upåklagelig. De holder meg oppdatert på alt, og support er tilgjengelig når som helst. Føler meg trygg som utleier.",
-    initials: "KH",
+    initials: "KS",
   },
 ];
 
 export default function Testimonials() {
   return (
     <section
-      className="py-20 md:py-28 bg-card"
+      className="py-24 md:py-32 bg-card relative overflow-hidden"
       data-testid="section-testimonials"
     >
-      <div className="max-w-7xl mx-auto px-4 sm:px-6">
-        <div className="text-center mb-16">
-          <Badge variant="secondary" className="mb-4">Tilbakemeldinger</Badge>
-          <h2 className="text-3xl sm:text-4xl md:text-5xl font-bold mb-4">
-            Hva Våre <span className="text-primary">Utleiere Sier</span>
+      <div className="absolute inset-0 bg-gradient-to-br from-primary/5 via-transparent to-primary/5 pointer-events-none" />
+      
+      <div className="max-w-7xl mx-auto px-6 sm:px-8 relative">
+        <div className="text-center mb-16 md:mb-20">
+          <Badge variant="secondary" className="mb-6 px-4 py-1.5 text-sm">Kundeomtaler</Badge>
+          <h2 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-bold mb-6 tracking-tight">
+            Innovative Løsninger for
+            <span className="block text-primary mt-2">Eiendomsforvaltning</span>
           </h2>
-          <p className="text-muted-foreground text-lg max-w-2xl mx-auto">
-            Over 200 fornøyde eiendomseiere stoler på oss med sine verdifulle eiendommer.
+          <p className="text-muted-foreground text-lg md:text-xl max-w-2xl mx-auto leading-relaxed">
+            Utforsk hva våre fornøyde kunder sier om oss - ekte historier om kvalitet og pålitelighet.
           </p>
         </div>
 
-        <div className="grid md:grid-cols-2 gap-6">
+        <div className="grid md:grid-cols-3 gap-6 lg:gap-8">
           {testimonials.map((testimonial, index) => (
             <Card
               key={index}
-              className="border-card-border"
+              className="group hover-elevate border-card-border bg-background/50 backdrop-blur-sm relative overflow-visible"
               data-testid={`card-testimonial-${index}`}
             >
-              <CardContent className="p-6">
-                <div className="flex items-start gap-4">
-                  <Quote className="w-10 h-10 text-primary/20 flex-shrink-0" />
+              <CardContent className="p-8">
+                <div className="absolute -top-4 left-8">
+                  <div className="w-10 h-10 rounded-xl bg-primary flex items-center justify-center shadow-lg">
+                    <Quote className="w-5 h-5 text-primary-foreground" />
+                  </div>
+                </div>
+
+                <div className="flex gap-1 mb-6 mt-4">
+                  {[...Array(testimonial.rating)].map((_, i) => (
+                    <Star key={i} className="w-4 h-4 fill-primary text-primary" />
+                  ))}
+                </div>
+                
+                <blockquote className="text-foreground leading-relaxed mb-6 text-lg">
+                  "{testimonial.quote}"
+                </blockquote>
+
+                <div className="flex items-center gap-4 pt-6 border-t border-border">
+                  <div className="w-12 h-12 rounded-full bg-gradient-to-br from-primary/30 to-primary/10 flex items-center justify-center">
+                    <span className="text-lg font-bold text-primary">
+                      {testimonial.initials}
+                    </span>
+                  </div>
                   <div className="flex-1">
-                    <div className="flex gap-1 mb-3">
-                      {[...Array(testimonial.rating)].map((_, i) => (
-                        <Star key={i} className="w-4 h-4 fill-primary text-primary" />
-                      ))}
+                    <div className="font-semibold flex items-center gap-2">
+                      {testimonial.name}
+                      <CheckCircle className="w-4 h-4 text-primary" />
                     </div>
-                    <p className="text-foreground mb-4 leading-relaxed">
-                      "{testimonial.text}"
-                    </p>
-                    <div className="flex items-center gap-3">
-                      <Avatar>
-                        <AvatarFallback className="bg-primary/10 text-primary font-semibold">
-                          {testimonial.initials}
-                        </AvatarFallback>
-                      </Avatar>
-                      <div>
-                        <p className="font-semibold text-sm">{testimonial.name}</p>
-                        <p className="text-muted-foreground text-xs">
-                          {testimonial.location}
-                        </p>
-                        <Badge variant="secondary" className="mt-1 text-xs">
-                          Verifisert utleier
-                        </Badge>
-                      </div>
-                    </div>
+                    <div className="text-sm text-muted-foreground">{testimonial.role}</div>
                   </div>
                 </div>
               </CardContent>
