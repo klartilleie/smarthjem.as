@@ -29,6 +29,8 @@ export const propertySchema = z.object({
   images: z.array(z.string()),
   amenities: z.array(z.string()),
   available: z.boolean(),
+  bookingUrl: z.string().optional(),
+  externalUrl: z.string().optional(),
 });
 
 export type Property = z.infer<typeof propertySchema>;
