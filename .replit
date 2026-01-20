@@ -41,5 +41,4 @@ waitForPort = 5000
 [userenv]
 
 [userenv.shared]
-BEDS24_REFRESH_TOKEN = "kbzMp1mAtYixRl7odlb6/6TZx7k6z8TpR/cok4Mt0GRvU+ZgNFpBdObvmJVlEjfUHFw+1ansO6eAPvm8AwHymJtSzSgrTeqJ+pQ6TJDeogGFal2QwSrW77zP9LRyJ7xYTQE6KdDoUp8iA1DHuKGT7A=="
 BEDS24_BOOKING_REFRESH_TOKEN = "Guhh/Z1Q5+esD7XThf7vxigolrIl2Li2kOWrmp+Kz4L28JFXfembdX1FxfjptweDXMTnLWmGWEyHgEch2ZciLubfjBve9vosLNj8CLCuGExw1YlA5/GmeCw0Egzcp1xacYzIDf6KJVhzq9fKrCVjLg=="
