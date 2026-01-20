@@ -82,7 +82,8 @@ export async function fetchBeds24Properties(): Promise<Property[]> {
   }
 
   try {
-    const propertiesResponse = await fetch(`${BEDS24_API_URL}/properties`, {
+    // Use the correct endpoint with includeAllRooms parameter
+    const propertiesResponse = await fetch(`${BEDS24_API_URL}/properties?includeAllRooms=true`, {
       headers: {
         "accept": "application/json",
         "token": token,
@@ -95,41 +96,52 @@ export async function fetchBeds24Properties(): Promise<Property[]> {
     }
 
     const properties: Beds24Property[] = await propertiesResponse.json();
+    console.log("BEDS24 properties fetched:", JSON.stringify(properties, null, 2));
 
-    const roomsResponse = await fetch(`${BEDS24_API_URL}/inventory/rooms`, {
-      headers: {
-        "accept": "application/json",
-        "token": token,
-      },
-    });
-
-    if (!roomsResponse.ok) {
-      console.error("Failed to fetch BEDS24 rooms:", await roomsResponse.text());
-      return [];
+    // Map properties directly since rooms are included
+    const mappedProperties: Property[] = [];
+    
+    for (const property of properties) {
+      // Each property has roomTypes array containing rooms
+      const roomTypes = (property as any).roomTypes || [];
+      
+      if (roomTypes.length > 0) {
+        for (const room of roomTypes) {
+          mappedProperties.push({
+            id: String(room.id || property.id),
+            name: room.name || property.name || "Ukjent eiendom",
+            description: room.description || property.description || "Ingen beskrivelse tilgjengelig.",
+            location: property.address?.city || "Norge",
+            beds: room.numBedrooms || 2,
+            bathrooms: room.numBathrooms || 1,
+            maxGuests: room.maxGuests || 4,
+            pricePerNight: 0, // Dynamic pricing - shown as "Se priser" 
+            images: room.photos && room.photos.length > 0 
+              ? room.photos 
+              : ["/stock_images/luxury_vacation_cabi_fd229fff.jpg"],
+            amenities: ["WiFi", "Smart Lås", "Rengjøring"],
+            available: true,
+          });
+        }
+      } else {
+        // Add property without rooms as single listing
+        mappedProperties.push({
+          id: String(property.id),
+          name: property.name || "Ukjent eiendom",
+          description: property.description || "Ingen beskrivelse tilgjengelig.",
+          location: property.address?.city || "Norge",
+          beds: 2,
+          bathrooms: 1,
+          maxGuests: 4,
+          pricePerNight: 0,
+          images: ["/stock_images/luxury_vacation_cabi_fd229fff.jpg"],
+          amenities: ["WiFi", "Smart Lås", "Rengjøring"],
+          available: true,
+        });
+      }
     }
 
-    const rooms: Beds24Room[] = await roomsResponse.json();
-
-    const mappedProperties: Property[] = rooms.map((room) => {
-      const property = properties.find((p) => p.id === room.propertyId);
-      
-      return {
-        id: room.id,
-        name: room.name || "Ukjent eiendom",
-        description: room.description || property?.description || "Ingen beskrivelse tilgjengelig.",
-        location: property?.address?.city || "Norge",
-        beds: room.numBedrooms || 2,
-        bathrooms: room.numBathrooms || 1,
-        maxGuests: room.maxGuests || 4,
-        pricePerNight: 2000,
-        images: room.photos && room.photos.length > 0 
-          ? room.photos 
-          : ["/stock_images/luxury_vacation_cabi_fd229fff.jpg"],
-        amenities: ["WiFi", "Smart Lås", "Rengjøring"],
-        available: true,
-      };
-    });
-
+    console.log(`BEDS24: Mapped ${mappedProperties.length} properties`);
     return mappedProperties;
   } catch (error) {
     console.error("Error fetching BEDS24 properties:", error);
@@ -191,6 +203,22 @@ export async function createBeds24Booking(booking: {
   }
 
   try {
+    // Beds24 API v2 booking format
+    const bookingPayload = [{
+      roomId: parseInt(booking.roomId, 10) || booking.roomId,
+      arrival: booking.checkIn,
+      departure: booking.checkOut,
+      numAdult: booking.numAdults,
+      firstName: booking.firstName,
+      lastName: booking.lastName,
+      email: booking.email,
+      mobile: booking.phone,
+      notes: booking.notes || "",
+      status: "confirmed",
+    }];
+
+    console.log("Creating BEDS24 booking:", JSON.stringify(bookingPayload, null, 2));
+
     const response = await fetch(`${BEDS24_API_URL}/bookings`, {
       method: "POST",
       headers: {
@@ -198,27 +226,27 @@ export async function createBeds24Booking(booking: {
         "Content-Type": "application/json",
         "token": token,
       },
-      body: JSON.stringify({
-        roomId: booking.roomId,
-        arrival: booking.checkIn,
-        departure: booking.checkOut,
-        numAdult: booking.numAdults,
-        firstName: booking.firstName,
-        lastName: booking.lastName,
-        email: booking.email,
-        mobile: booking.phone,
-        notes: booking.notes,
-      }),
+      body: JSON.stringify(bookingPayload),
     });
 
+    const responseText = await response.text();
+    console.log("BEDS24 booking response:", response.status, responseText);
+
     if (!response.ok) {
-      const errorText = await response.text();
-      console.error("Failed to create BEDS24 booking:", errorText);
-      return { success: false, error: errorText };
+      console.error("Failed to create BEDS24 booking:", responseText);
+      return { success: false, error: responseText };
     }
 
-    const result = await response.json();
-    return { success: true, bookingId: result.id };
+    let result;
+    try {
+      result = JSON.parse(responseText);
+    } catch {
+      result = { id: "unknown" };
+    }
+    
+    const bookingId = Array.isArray(result) && result.length > 0 ? result[0].id : result.id;
+    console.log("BEDS24 booking created successfully, ID:", bookingId);
+    return { success: true, bookingId: String(bookingId) };
   } catch (error) {
     console.error("Error creating BEDS24 booking:", error);
     return { success: false, error: String(error) };
