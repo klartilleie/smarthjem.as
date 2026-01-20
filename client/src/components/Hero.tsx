@@ -63,14 +63,10 @@ export default function Hero() {
             </a>
           </div>
 
-          <div className="grid sm:grid-cols-3 gap-4 text-white/70 text-sm">
+          <div className="grid sm:grid-cols-2 gap-4 text-white/70 text-sm max-w-xl mx-auto">
             <div className="flex items-center justify-center gap-2 backdrop-blur-md bg-white/5 rounded-xl py-3 px-4 border border-white/10">
               <CheckCircle className="w-4 h-4 text-primary flex-shrink-0" />
               <span>Smart Hjem AS</span>
-            </div>
-            <div className="flex items-center justify-center gap-2 backdrop-blur-md bg-white/5 rounded-xl py-3 px-4 border border-white/10">
-              <CheckCircle className="w-4 h-4 text-primary flex-shrink-0" />
-              <span>16+ {t.nav.properties}</span>
             </div>
             <div className="flex items-center justify-center gap-2 backdrop-blur-md bg-white/5 rounded-xl py-3 px-4 border border-white/10">
               <CheckCircle className="w-4 h-4 text-primary flex-shrink-0" />
