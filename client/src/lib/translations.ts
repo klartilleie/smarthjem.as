@@ -279,4 +279,4 @@ export const translations = {
   },
 } as const;
 
-export type Translations = typeof translations.no;
+export type Translations = (typeof translations)[Language];

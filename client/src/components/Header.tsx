@@ -4,17 +4,19 @@ import { Button } from "@/components/ui/button";
 import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet";
 import { Menu, Sun, Moon } from "lucide-react";
 import { useTheme } from "@/lib/theme";
+import { useLanguage } from "@/contexts/LanguageContext";
+import LanguageSelector from "@/components/LanguageSelector";
 import logoImage from "@assets/Smart_Hjem_As_-_FinalizedLogoD2L5_(Transparent)-01_1768943309700.png";
 
-const navLinks = [
-  { href: "/", label: "Hjem" },
-  { href: "/booking", label: "Eiendommer" },
-  { href: "/#tjenester", label: "Tjenester" },
-  { href: "/#hvordan", label: "Hvordan Det Fungerer" },
-  { href: "/#kontakt", label: "Kontakt" },
-];
-
 export default function Header() {
+  const { t } = useLanguage();
+  
+  const navLinks = [
+    { href: "/", label: t.nav.home },
+    { href: "/booking", label: t.nav.properties },
+    { href: "/#tjenester", label: t.services.badge },
+    { href: "/#kontakt", label: t.nav.contact },
+  ];
   const [isScrolled, setIsScrolled] = useState(false);
   const [mobileOpen, setMobileOpen] = useState(false);
   const [location] = useLocation();
@@ -64,7 +66,9 @@ export default function Header() {
             ))}
           </nav>
 
-          <div className="flex items-center gap-3">
+          <div className="flex items-center gap-2">
+            <LanguageSelector />
+            
             <Button
               variant="ghost"
               size="icon"
@@ -77,7 +81,7 @@ export default function Header() {
 
             <Link href="/#kontakt" className="hidden lg:block">
               <Button data-testid="button-contact-header">
-                Kontakt Oss
+                {t.nav.contact}
               </Button>
             </Link>
 
@@ -111,7 +115,7 @@ export default function Header() {
                   ))}
                   <Link href="/#kontakt" onClick={() => setMobileOpen(false)}>
                     <Button className="w-full mt-4" data-testid="mobile-button-contact">
-                      Kontakt Oss
+                      {t.nav.contact}
                     </Button>
                   </Link>
                 </nav>
