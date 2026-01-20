@@ -59,15 +59,19 @@ Current schema includes:
 
 ### Third-Party Integrations
 
-- **Beds24 API**: Optional channel manager integration for syncing properties and creating bookings. Configured via `BEDS24_REFRESH_TOKEN` environment variable. Falls back to local sample data if not configured.
+- **Beds24 API V2**: Channel manager integration for syncing properties and creating bookings
+  - Configured via `BEDS24_REFRESH_TOKEN` environment variable (permanent token, does not expire)
+  - Token was exchanged from invite code using `/v2/authentication/setup` endpoint
+  - Falls back to local sample data with Booking.com photos if API unavailable
+  - Supports: Property listings, room data, feature codes, availability checking
 
 ### Property Data
 
-- All 16 properties are real vacation rentals managed by Smart Hjem AS
-- Property data (names, locations, descriptions, amenities, images) sourced from Booking.com
-- 3 properties marked as unavailable (404 on Booking.com): Flott hytte skjærgård Lindesnes, Flott hytte ved Bjellandsveien, Flott Ferieleilighet - Øyslebø
-- 13 active properties with real photos and descriptions
-- **Pricing**: Prices are dynamic and vary by season/dates on booking platforms. UI shows "Se priser" or "Kontakt for priser" instead of static prices
+- 20 vacation rental properties managed by Smart Hjem AS are loaded from Beds24
+- Property data includes: names, locations (city), soverom/bad counts, amenities from feature codes
+- Beds24 feature codes are mapped to Norwegian amenities (WiFi, Kjøkken, Gratis Parkering, etc.)
+- Fallback images from Booking.com used when Beds24 doesn't provide photos
+- **Pricing**: Prices are dynamic and vary by season/dates. UI shows "Se priser" or "Kontakt for priser"
 - Properties listed on multiple platforms: Booking.com, Airbnb, VRBO, Finn.no
 
 ### Key NPM Packages

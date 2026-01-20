@@ -191,8 +191,68 @@ export async function fetchBeds24Properties(): Promise<Property[]> {
       return [];
     }
 
-    const properties: Beds24Property[] = await propertiesResponse.json();
-    console.log("BEDS24 properties fetched:", JSON.stringify(properties, null, 2));
+    const responseData = await propertiesResponse.json();
+    console.log("BEDS24 properties fetched:", JSON.stringify(responseData, null, 2));
+    
+    // Handle both array and object with data property
+    const properties: Beds24Property[] = Array.isArray(responseData) 
+      ? responseData 
+      : (responseData.data || []);
+
+    // Helper function to convert Beds24 feature codes to Norwegian amenities
+    const mapFeatureCodes = (featureCodes: string[][] = []): string[] => {
+      const featureMap: Record<string, string> = {
+        'WIFI': 'WiFi',
+        'KITCHEN': 'Kjøkken',
+        'TV': 'TV',
+        'PARKING': 'Gratis Parkering',
+        'BALCONY': 'Balkong',
+        'TERRACE': 'Terrasse',
+        'GARDEN': 'Hage',
+        'BEDROOM': 'Soverom',
+        'BATHROOM_FULL': 'Bad',
+        'PETS_CONSIDERED': 'Kjæledyr Tillatt',
+        'PETS_ALLOWED': 'Kjæledyr Tillatt',
+        'HEATING': 'Oppvarming',
+        'FIREPLACE': 'Peis',
+        'SKI_IN': 'Vintersport',
+        'WASHER': 'Vaskemaskin',
+        'DRYER': 'Tørketrommel',
+        'REFRIGERATOR': 'Kjøleskap',
+        'OVEN': 'Ovn',
+        'STOVE': 'Komfyr',
+        'DISHWASHER': 'Oppvaskmaskin',
+        'LINENS': 'Sengetøy',
+        'HOT_TUB': 'Boblebad',
+        'SAUNA': 'Badstu',
+        'POOL': 'Basseng',
+        'SEA_VIEW': 'Sjøutsikt',
+        'MOUNTAIN_VIEW': 'Fjellutsikt',
+      };
+      
+      const amenities = new Set<string>();
+      for (const codeArray of featureCodes) {
+        for (const code of codeArray) {
+          if (featureMap[code]) {
+            amenities.add(featureMap[code]);
+          }
+        }
+      }
+      return Array.from(amenities);
+    }
+
+    // Count bedrooms and bathrooms from feature codes
+    const countRooms = (featureCodes: string[][] = []): { beds: number; bathrooms: number } => {
+      let beds = 0;
+      let bathrooms = 0;
+      for (const codeArray of featureCodes) {
+        for (const code of codeArray) {
+          if (code === 'BEDROOM') beds++;
+          if (code === 'BATHROOM_FULL' || code === 'BATHROOM') bathrooms++;
+        }
+      }
+      return { beds: beds || 2, bathrooms: bathrooms || 1 };
+    }
 
     // Map properties directly since rooms are included
     const mappedProperties: Property[] = [];
@@ -200,22 +260,33 @@ export async function fetchBeds24Properties(): Promise<Property[]> {
     for (const property of properties) {
       // Each property has roomTypes array containing rooms
       const roomTypes = (property as any).roomTypes || [];
+      const propCity = (property as any).city || (property as any).address?.city || "Norge";
       
       if (roomTypes.length > 0) {
         for (const room of roomTypes) {
+          const roomFeatures = room.featureCodes || [];
+          const amenities = mapFeatureCodes(roomFeatures);
+          const roomCounts = countRooms(roomFeatures);
+          
+          // Clean up property name - remove owner name prefix if present
+          let name = room.name || property.name || "Ukjent eiendom";
+          if (name.includes(' · ')) {
+            name = name.split(' · ').pop() || name;
+          }
+          
           mappedProperties.push({
             id: String(room.id || property.id),
-            name: room.name || property.name || "Ukjent eiendom",
+            name: name,
             description: room.description || property.description || "Ingen beskrivelse tilgjengelig.",
-            location: property.address?.city || "Norge",
-            beds: room.numBedrooms || 2,
-            bathrooms: room.numBathrooms || 1,
-            maxGuests: room.maxGuests || 4,
+            location: propCity,
+            beds: roomCounts.beds,
+            bathrooms: roomCounts.bathrooms,
+            maxGuests: room.maxPeople || room.maxGuests || 4,
             pricePerNight: 0, // Dynamic pricing - shown as "Se priser" 
             images: room.photos && room.photos.length > 0 
               ? room.photos 
               : ["/stock_images/luxury_vacation_cabi_fd229fff.jpg"],
-            amenities: ["WiFi", "Smart Lås", "Rengjøring"],
+            amenities: amenities.length > 0 ? amenities : ["WiFi", "Kjøkken", "Gratis Parkering"],
             available: true,
           });
         }
@@ -225,13 +296,13 @@ export async function fetchBeds24Properties(): Promise<Property[]> {
           id: String(property.id),
           name: property.name || "Ukjent eiendom",
           description: property.description || "Ingen beskrivelse tilgjengelig.",
-          location: property.address?.city || "Norge",
+          location: propCity,
           beds: 2,
           bathrooms: 1,
           maxGuests: 4,
           pricePerNight: 0,
           images: ["/stock_images/luxury_vacation_cabi_fd229fff.jpg"],
-          amenities: ["WiFi", "Smart Lås", "Rengjøring"],
+          amenities: ["WiFi", "Kjøkken", "Gratis Parkering"],
           available: true,
         });
       }
