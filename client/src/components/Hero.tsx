@@ -15,7 +15,6 @@ export default function Hero() {
         style={{ backgroundImage: `url(${heroImage})` }}
       />
       <div className="absolute inset-0 bg-gradient-to-b from-black/60 via-black/50 to-black/70" />
-      
       <div className="relative z-10 max-w-5xl mx-auto px-4 sm:px-6 text-center">
         <Badge
           variant="secondary"
@@ -30,10 +29,7 @@ export default function Hero() {
           <span className="block text-primary mt-2">Vi Tar Oss av Alt</span>
         </h1>
 
-        <p className="text-lg sm:text-xl text-white/90 max-w-2xl mx-auto mb-8 leading-relaxed">
-          Fra rengjøring til internett, fra booking til nøkkelfri adgang.
-          Smart Hjem AS gir deg en helt bekymringsfri utleieopplevelse.
-        </p>
+        <p className="text-lg sm:text-xl text-white/90 max-w-2xl mx-auto mb-8 leading-relaxed"> Smart Hjem AS gir deg en helt bekymringsfri utleieopplevelse.</p>
 
         <div className="flex flex-col sm:flex-row items-center justify-center gap-4">
           <Link href="/booking">
@@ -72,7 +68,6 @@ export default function Hero() {
           </div>
         </div>
       </div>
-
       <div className="absolute bottom-8 left-1/2 -translate-x-1/2 animate-bounce">
         <a href="#tjenester" className="text-white/60 hover:text-white transition-colors">
           <svg className="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
