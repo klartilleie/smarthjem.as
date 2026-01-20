@@ -66,7 +66,8 @@ async function exchangeInviteCode(inviteCode: string): Promise<{ token: string; 
 }
 
 async function getAccessToken(): Promise<string | null> {
-  const refreshToken = process.env.BEDS24_REFRESH_TOKEN;
+  // Support both naming conventions for the token
+  const refreshToken = process.env.BEDS24_REFRESH_TOKEN || process.env.Beds24_data;
   
   if (!refreshToken) {
     console.log("BEDS24_REFRESH_TOKEN not configured");
@@ -119,7 +120,8 @@ async function getAccessToken(): Promise<string | null> {
 
 // Separate token getter for booking operations (write access)
 async function getBookingAccessToken(): Promise<string | null> {
-  const bookingRefreshToken = process.env.BEDS24_BOOKING_REFRESH_TOKEN;
+  // Support both naming conventions for the token
+  const bookingRefreshToken = process.env.BEDS24_BOOKING_REFRESH_TOKEN || process.env.Beds24_booking;
   
   if (!bookingRefreshToken) {
     console.log("BEDS24_BOOKING_REFRESH_TOKEN not configured, using main token");
@@ -348,5 +350,5 @@ export async function createBeds24Booking(booking: {
 }
 
 export function isBeds24Configured(): boolean {
-  return !!process.env.BEDS24_REFRESH_TOKEN;
+  return !!(process.env.BEDS24_REFRESH_TOKEN || process.env.Beds24_data);
 }
