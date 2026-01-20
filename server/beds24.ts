@@ -37,6 +37,33 @@ interface Beds24RoomOffer {
 
 let accessToken: string | null = null;
 let tokenExpiry: Date | null = null;
+let bookingAccessToken: string | null = null;
+let bookingTokenExpiry: Date | null = null;
+
+// Convert invite code to refresh token and access token
+async function exchangeInviteCode(inviteCode: string): Promise<{ token: string; refreshToken: string } | null> {
+  try {
+    const response = await fetch(`${BEDS24_API_URL}/authentication/setup`, {
+      method: "GET",
+      headers: {
+        "accept": "application/json",
+        "code": inviteCode,
+      },
+    });
+
+    if (!response.ok) {
+      const errorText = await response.text();
+      console.error("Failed to exchange invite code:", errorText);
+      return null;
+    }
+
+    const data: Beds24TokenResponse = await response.json();
+    return { token: data.token, refreshToken: data.refreshToken };
+  } catch (error) {
+    console.error("Error exchanging invite code:", error);
+    return null;
+  }
+}
 
 async function getAccessToken(): Promise<string | null> {
   const refreshToken = process.env.BEDS24_REFRESH_TOKEN;
@@ -51,6 +78,22 @@ async function getAccessToken(): Promise<string | null> {
   }
 
   try {
+    // Check if this looks like an invite code (very long base64) vs refresh token
+    const isInviteCode = refreshToken.length > 150;
+    
+    if (isInviteCode) {
+      // Try to exchange invite code first
+      console.log("Attempting to exchange invite code for tokens...");
+      const result = await exchangeInviteCode(refreshToken);
+      if (result) {
+        accessToken = result.token;
+        tokenExpiry = new Date(Date.now() + 82800 * 1000); // 23 hours
+        console.log("Successfully exchanged invite code!");
+        return accessToken;
+      }
+    }
+    
+    // Standard refresh token flow
     const response = await fetch(`${BEDS24_API_URL}/authentication/token`, {
       method: "GET",
       headers: {
@@ -70,6 +113,57 @@ async function getAccessToken(): Promise<string | null> {
     return accessToken;
   } catch (error) {
     console.error("Error getting BEDS24 token:", error);
+    return null;
+  }
+}
+
+// Separate token getter for booking operations (write access)
+async function getBookingAccessToken(): Promise<string | null> {
+  const bookingRefreshToken = process.env.BEDS24_BOOKING_REFRESH_TOKEN;
+  
+  if (!bookingRefreshToken) {
+    console.log("BEDS24_BOOKING_REFRESH_TOKEN not configured, using main token");
+    return getAccessToken();
+  }
+
+  if (bookingAccessToken && bookingTokenExpiry && new Date() < bookingTokenExpiry) {
+    return bookingAccessToken;
+  }
+
+  try {
+    // Check if this looks like an invite code
+    const isInviteCode = bookingRefreshToken.length > 150;
+    
+    if (isInviteCode) {
+      console.log("Attempting to exchange booking invite code for tokens...");
+      const result = await exchangeInviteCode(bookingRefreshToken);
+      if (result) {
+        bookingAccessToken = result.token;
+        bookingTokenExpiry = new Date(Date.now() + 82800 * 1000);
+        console.log("Successfully exchanged booking invite code!");
+        return bookingAccessToken;
+      }
+    }
+    
+    const response = await fetch(`${BEDS24_API_URL}/authentication/token`, {
+      method: "GET",
+      headers: {
+        "accept": "application/json",
+        "refreshToken": bookingRefreshToken,
+      },
+    });
+
+    if (!response.ok) {
+      console.error("Failed to get BEDS24 booking access token:", await response.text());
+      return null;
+    }
+
+    const data: Beds24TokenResponse = await response.json();
+    bookingAccessToken = data.token;
+    bookingTokenExpiry = new Date(Date.now() + (data.expiresIn - 300) * 1000);
+    return bookingAccessToken;
+  } catch (error) {
+    console.error("Error getting BEDS24 booking token:", error);
     return null;
   }
 }
@@ -196,7 +290,7 @@ export async function createBeds24Booking(booking: {
   phone: string;
   notes?: string;
 }): Promise<{ success: boolean; bookingId?: string; error?: string }> {
-  const token = await getAccessToken();
+  const token = await getBookingAccessToken();
   
   if (!token) {
     return { success: false, error: "API not configured" };
