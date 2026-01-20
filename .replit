@@ -41,5 +41,3 @@ waitForPort = 5000
 [userenv]
 
 [userenv.shared]
-Beds24_booking = "HZxaFQoxhK/6ht4jx9K4Ip10qwk705dXGyXaXFV5V9n4oWapnWlSA6PIkBBKlLOiU/KVbmcROjAdOz7Zc2N3dzL9vgIq5TjQ1X8t8GFIcHiUo4oEVOZgeH0LxS4TPf9tze0Gujjyj4Pi/m94mQJduw=="
-Beds24_data = "HVisOWvOaM2REN28eEqA6/fZS/tCeXdmet6oJeE25CIMb/chRlzCDK04NJKbRoIwFFvi2gBz0bKM+TEjT4oYR1rG7p6Scku+5LUN+BYVQqeVE9TaPbH5jWbEvC44AJnD/hzEEfzICNplLKnJVp00sg=="
