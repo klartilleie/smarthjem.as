@@ -17,11 +17,12 @@ import {
   FormMessage,
 } from "@/components/ui/form";
 import { useToast } from "@/hooks/use-toast";
+import { useLanguage } from "@/contexts/LanguageContext";
 import { apiRequest } from "@/lib/queryClient";
 import { bookingRequestSchema, type Property, type BookingRequest } from "@shared/schema";
 import {
   MapPin, Users, Bed, Bath, Wifi, Key, Sparkles, Car, Mountain,
-  ChevronLeft, ChevronRight, CheckCircle
+  ChevronLeft, ChevronRight, CheckCircle, ExternalLink
 } from "lucide-react";
 
 interface PropertyModalProps {
@@ -35,11 +36,15 @@ const amenityIcons: Record<string, React.ReactNode> = {
   "Smart Lås": <Key className="w-4 h-4" />,
   "Rengjøring": <Sparkles className="w-4 h-4" />,
   "Parkering": <Car className="w-4 h-4" />,
+  "Gratis Parkering": <Car className="w-4 h-4" />,
   "Utsikt": <Mountain className="w-4 h-4" />,
+  "Sjøutsikt": <Mountain className="w-4 h-4" />,
+  "Fjellutsikt": <Mountain className="w-4 h-4" />,
 };
 
 export default function PropertyModal({ property, open, onClose }: PropertyModalProps) {
   const { toast } = useToast();
+  const { t } = useLanguage();
   const [currentImage, setCurrentImage] = useState(0);
   const [showBookingForm, setShowBookingForm] = useState(false);
   const [bookingComplete, setBookingComplete] = useState(false);
@@ -73,14 +78,14 @@ export default function PropertyModal({ property, open, onClose }: PropertyModal
     onSuccess: () => {
       setBookingComplete(true);
       toast({
-        title: "Booking forespørsel sendt!",
-        description: "Vi sender deg bekreftelse på e-post.",
+        title: t.modal.toast.success,
+        description: t.modal.toast.successDesc,
       });
     },
     onError: () => {
       toast({
-        title: "Noe gikk galt",
-        description: "Vennligst prøv igjen senere.",
+        title: t.modal.toast.error,
+        description: t.modal.toast.errorDesc,
         variant: "destructive",
       });
     },
@@ -92,12 +97,19 @@ export default function PropertyModal({ property, open, onClose }: PropertyModal
 
   if (!property) return null;
 
+  const hasImages = property.images && property.images.length > 0;
+  const displayImages = hasImages ? property.images : ["/placeholder-property.jpg"];
+
   const nextImage = () => {
-    setCurrentImage((prev) => (prev + 1) % property.images.length);
+    if (hasImages) {
+      setCurrentImage((prev) => (prev + 1) % displayImages.length);
+    }
   };
 
   const prevImage = () => {
-    setCurrentImage((prev) => (prev - 1 + property.images.length) % property.images.length);
+    if (hasImages) {
+      setCurrentImage((prev) => (prev - 1 + displayImages.length) % displayImages.length);
+    }
   };
 
   const handleClose = () => {
@@ -108,20 +120,35 @@ export default function PropertyModal({ property, open, onClose }: PropertyModal
     onClose();
   };
 
+  const handleExternalLink = () => {
+    if (property.externalUrl) {
+      window.open(property.externalUrl, '_blank', 'noopener,noreferrer');
+    }
+  };
+
   return (
     <Dialog open={open} onOpenChange={handleClose}>
       <DialogContent className="max-w-4xl max-h-[90vh] overflow-y-auto p-0">
         <DialogDescription className="sr-only">
-          Detaljer og booking for {property.name}
+          {t.modal.aboutProperty}: {property.name}
         </DialogDescription>
         <div className="relative">
           <div className="relative aspect-[16/10] overflow-hidden bg-muted">
-            <img
-              src={property.images[currentImage]}
-              alt={`${property.name} - bilde ${currentImage + 1}`}
-              className="w-full h-full object-cover"
-            />
-            {property.images.length > 1 && (
+            {hasImages ? (
+              <img
+                src={displayImages[currentImage]}
+                alt={`${property.name} - bilde ${currentImage + 1}`}
+                className="w-full h-full object-cover"
+              />
+            ) : (
+              <div className="w-full h-full flex items-center justify-center bg-gradient-to-br from-primary/10 to-primary/5">
+                <div className="text-center">
+                  <Mountain className="w-16 h-16 text-primary/30 mx-auto mb-2" />
+                  <p className="text-muted-foreground text-sm">Bilde ikke tilgjengelig</p>
+                </div>
+              </div>
+            )}
+            {hasImages && displayImages.length > 1 && (
               <>
                 <Button
                   variant="secondary"
@@ -142,7 +169,7 @@ export default function PropertyModal({ property, open, onClose }: PropertyModal
                   <ChevronRight className="w-6 h-6" />
                 </Button>
                 <div className="absolute bottom-4 left-1/2 -translate-x-1/2 flex gap-1.5">
-                  {property.images.map((_, i) => (
+                  {displayImages.map((_, i) => (
                     <button
                       key={i}
                       className={`w-2 h-2 rounded-full transition-colors ${
@@ -165,18 +192,18 @@ export default function PropertyModal({ property, open, onClose }: PropertyModal
               <div className="w-16 h-16 rounded-full bg-primary/10 flex items-center justify-center mx-auto mb-4">
                 <CheckCircle className="w-8 h-8 text-primary" />
               </div>
-              <h3 className="font-bold text-2xl mb-2">Takk for din bestilling!</h3>
+              <h3 className="font-bold text-2xl mb-2">{t.modal.success.title}</h3>
               <p className="text-muted-foreground mb-6">
-                Vi har mottatt din forespørsel for {property.name}. Du vil motta en bekreftelse på e-post innen kort tid.
+                {t.modal.success.message.replace('{property}', property.name)}
               </p>
               <Button onClick={handleClose} data-testid="button-close-booking">
-                Lukk
+                {t.modal.success.close}
               </Button>
             </div>
           ) : showBookingForm ? (
             <div>
               <DialogHeader className="mb-6">
-                <DialogTitle className="text-2xl">Book {property.name}</DialogTitle>
+                <DialogTitle className="text-2xl">{t.modal.bookingForm.title} {property.name}</DialogTitle>
               </DialogHeader>
               <Form {...form}>
                 <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-4">
@@ -186,7 +213,7 @@ export default function PropertyModal({ property, open, onClose }: PropertyModal
                       name="checkIn"
                       render={({ field }) => (
                         <FormItem>
-                          <FormLabel>Innsjekking *</FormLabel>
+                          <FormLabel>{t.modal.bookingForm.checkIn} *</FormLabel>
                           <FormControl>
                             <Input
                               type="date"
@@ -203,7 +230,7 @@ export default function PropertyModal({ property, open, onClose }: PropertyModal
                       name="checkOut"
                       render={({ field }) => (
                         <FormItem>
-                          <FormLabel>Utsjekking *</FormLabel>
+                          <FormLabel>{t.modal.bookingForm.checkOut} *</FormLabel>
                           <FormControl>
                             <Input
                               type="date"
@@ -221,7 +248,7 @@ export default function PropertyModal({ property, open, onClose }: PropertyModal
                     name="guests"
                     render={({ field }) => (
                       <FormItem>
-                        <FormLabel>Antall gjester *</FormLabel>
+                        <FormLabel>{t.modal.bookingForm.guests} *</FormLabel>
                         <FormControl>
                           <Input
                             type="number"
@@ -243,7 +270,7 @@ export default function PropertyModal({ property, open, onClose }: PropertyModal
                       name="firstName"
                       render={({ field }) => (
                         <FormItem>
-                          <FormLabel>Fornavn *</FormLabel>
+                          <FormLabel>{t.modal.bookingForm.firstName} *</FormLabel>
                           <FormControl>
                             <Input
                               {...field}
@@ -259,7 +286,7 @@ export default function PropertyModal({ property, open, onClose }: PropertyModal
                       name="lastName"
                       render={({ field }) => (
                         <FormItem>
-                          <FormLabel>Etternavn *</FormLabel>
+                          <FormLabel>{t.modal.bookingForm.lastName} *</FormLabel>
                           <FormControl>
                             <Input
                               {...field}
@@ -277,7 +304,7 @@ export default function PropertyModal({ property, open, onClose }: PropertyModal
                       name="email"
                       render={({ field }) => (
                         <FormItem>
-                          <FormLabel>E-post *</FormLabel>
+                          <FormLabel>{t.modal.bookingForm.email} *</FormLabel>
                           <FormControl>
                             <Input
                               type="email"
@@ -294,7 +321,7 @@ export default function PropertyModal({ property, open, onClose }: PropertyModal
                       name="phone"
                       render={({ field }) => (
                         <FormItem>
-                          <FormLabel>Telefon *</FormLabel>
+                          <FormLabel>{t.modal.bookingForm.phone} *</FormLabel>
                           <FormControl>
                             <Input
                               {...field}
@@ -311,10 +338,10 @@ export default function PropertyModal({ property, open, onClose }: PropertyModal
                     name="specialRequests"
                     render={({ field }) => (
                       <FormItem>
-                        <FormLabel>Spesielle ønsker</FormLabel>
+                        <FormLabel>{t.modal.bookingForm.specialRequests}</FormLabel>
                         <FormControl>
                           <Textarea
-                            placeholder="F.eks. sent ankomst, allergier, etc."
+                            placeholder={t.modal.bookingForm.specialRequestsPlaceholder}
                             {...field}
                             data-testid="input-special-requests"
                           />
@@ -331,7 +358,7 @@ export default function PropertyModal({ property, open, onClose }: PropertyModal
                       onClick={() => setShowBookingForm(false)}
                       data-testid="button-back"
                     >
-                      Tilbake
+                      {t.modal.bookingForm.back}
                     </Button>
                     <Button
                       type="submit"
@@ -339,7 +366,7 @@ export default function PropertyModal({ property, open, onClose }: PropertyModal
                       disabled={mutation.isPending}
                       data-testid="button-submit-booking"
                     >
-                      {mutation.isPending ? "Sender..." : "Send Bestilling"}
+                      {mutation.isPending ? t.modal.bookingForm.sending : t.modal.bookingForm.submit}
                     </Button>
                   </div>
                 </form>
@@ -358,8 +385,8 @@ export default function PropertyModal({ property, open, onClose }: PropertyModal
                   </div>
                   <Badge className="text-lg px-4 py-2 bg-primary text-primary-foreground">
                     {property.pricePerNight > 0 
-                      ? `kr ${property.pricePerNight.toLocaleString()}/natt`
-                      : "Kontakt for priser"}
+                      ? `kr ${property.pricePerNight.toLocaleString()}${t.modal.perNight}`
+                      : t.modal.contactForPrices}
                   </Badge>
                 </div>
               </DialogHeader>
@@ -367,22 +394,22 @@ export default function PropertyModal({ property, open, onClose }: PropertyModal
               <div className="flex flex-wrap gap-4 mt-6 text-sm">
                 <div className="flex items-center gap-2 bg-muted px-3 py-2 rounded-md">
                   <Bed className="w-4 h-4 text-primary" />
-                  <span>{property.beds} soverom</span>
+                  <span>{property.beds} {t.modal.bedrooms}</span>
                 </div>
                 <div className="flex items-center gap-2 bg-muted px-3 py-2 rounded-md">
                   <Bath className="w-4 h-4 text-primary" />
-                  <span>{property.bathrooms} bad</span>
+                  <span>{property.bathrooms} {t.modal.bathrooms}</span>
                 </div>
                 <div className="flex items-center gap-2 bg-muted px-3 py-2 rounded-md">
                   <Users className="w-4 h-4 text-primary" />
-                  <span>Maks {property.maxGuests} gjester</span>
+                  <span>{t.modal.maxGuests} {property.maxGuests}</span>
                 </div>
               </div>
 
               <Separator className="my-6" />
 
               <div>
-                <h4 className="font-semibold mb-3">Om eiendommen</h4>
+                <h4 className="font-semibold mb-3">{t.modal.aboutProperty}</h4>
                 <p className="text-muted-foreground leading-relaxed">
                   {property.description}
                 </p>
@@ -391,7 +418,7 @@ export default function PropertyModal({ property, open, onClose }: PropertyModal
               <Separator className="my-6" />
 
               <div>
-                <h4 className="font-semibold mb-3">Fasiliteter</h4>
+                <h4 className="font-semibold mb-3">{t.modal.amenities}</h4>
                 <div className="grid grid-cols-2 sm:grid-cols-3 gap-3">
                   {property.amenities.map((amenity, i) => (
                     <div
@@ -405,7 +432,7 @@ export default function PropertyModal({ property, open, onClose }: PropertyModal
                 </div>
               </div>
 
-              <div className="mt-8">
+              <div className="mt-8 flex flex-col gap-3">
                 <Button
                   className="w-full"
                   size="lg"
@@ -413,8 +440,21 @@ export default function PropertyModal({ property, open, onClose }: PropertyModal
                   disabled={!property.available}
                   data-testid="button-book-property"
                 >
-                  {property.available ? "Book Denne Eiendommen" : "Ikke tilgjengelig"}
+                  {property.available ? t.modal.sendBookingRequest : t.modal.notAvailable}
                 </Button>
+                
+                {property.externalUrl && (
+                  <Button
+                    variant="outline"
+                    className="w-full"
+                    size="lg"
+                    onClick={handleExternalLink}
+                    data-testid="button-external-link"
+                  >
+                    <ExternalLink className="w-4 h-4 mr-2" />
+                    {t.modal.viewOnExternalSite}
+                  </Button>
+                )}
               </div>
             </>
           )}
