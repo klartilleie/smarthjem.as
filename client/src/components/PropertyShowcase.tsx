@@ -82,7 +82,9 @@ export default function PropertyShowcase() {
                   <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent" />
                   <div className="absolute top-4 right-4">
                     <Badge className="bg-primary text-primary-foreground shadow-lg">
-                      kr {property.pricePerNight.toLocaleString()}/natt
+                      {property.pricePerNight > 0 
+                        ? `kr ${property.pricePerNight.toLocaleString()}/natt`
+                        : "Se priser"}
                     </Badge>
                   </div>
                   <div className="absolute bottom-4 left-4 right-4">

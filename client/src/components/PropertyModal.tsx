@@ -357,7 +357,9 @@ export default function PropertyModal({ property, open, onClose }: PropertyModal
                     </div>
                   </div>
                   <Badge className="text-lg px-4 py-2 bg-primary text-primary-foreground">
-                    kr {property.pricePerNight.toLocaleString()}/natt
+                    {property.pricePerNight > 0 
+                      ? `kr ${property.pricePerNight.toLocaleString()}/natt`
+                      : "Kontakt for priser"}
                   </Badge>
                 </div>
               </DialogHeader>
