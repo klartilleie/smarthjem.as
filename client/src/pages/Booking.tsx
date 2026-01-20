@@ -30,11 +30,14 @@ export default function Booking() {
     queryKey: ["/api/properties"],
   });
 
-  const locations = properties
-    ? Array.from(new Set(properties.map((p) => p.location)))
+  // Filter to only show available (active) properties
+  const availableProperties = properties?.filter((p) => p.available !== false) || [];
+
+  const locations = availableProperties.length > 0
+    ? Array.from(new Set(availableProperties.map((p) => p.location)))
     : [];
 
-  const filteredProperties = properties?.filter((property) => {
+  const filteredProperties = availableProperties.filter((property) => {
     const matchesSearch =
       property.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
       property.location.toLowerCase().includes(searchQuery.toLowerCase());
@@ -181,7 +184,7 @@ export default function Booking() {
               <>
                 <div className="flex items-center justify-between mb-6">
                   <p className="text-muted-foreground">
-                    Viser {filteredProperties.length} av {properties?.length} eiendommer
+                    Viser {filteredProperties.length} av {availableProperties.length} eiendommer
                   </p>
                 </div>
                 <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
