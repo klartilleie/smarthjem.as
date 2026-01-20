@@ -14,13 +14,25 @@ Preferred communication style: Simple, everyday language.
 
 - **Framework**: React 18 with TypeScript
 - **Routing**: Wouter (lightweight React router)
-- **State Management**: TanStack Query for server state, React Context for theme
+- **State Management**: TanStack Query for server state, React Context for theme and language
+- **Internationalization**: Multi-language support (Norwegian, English, German) via LanguageContext
 - **UI Components**: shadcn/ui component library built on Radix UI primitives
 - **Styling**: Tailwind CSS with custom CSS variables for theming (light/dark mode support)
 - **Form Handling**: React Hook Form with Zod validation
 - **Build Tool**: Vite with HMR support
 
 The frontend follows a component-based architecture with pages (`Home`, `Booking`) composed of reusable sections (`Hero`, `Services`, `PropertyShowcase`, etc.). The design system is Airbnb-inspired with Nordic minimalism, using a golden/amber primary color palette.
+
+### Internationalization (i18n)
+
+- **Languages Supported**: Norwegian (no), English (en), German (de)
+- **Translation System**: Custom context-based approach using `LanguageContext`
+- **Key Files**:
+  - `client/src/lib/translations.ts` - All translation strings
+  - `client/src/contexts/LanguageContext.tsx` - Language state management
+  - `client/src/components/LanguageSelector.tsx` - Language dropdown in header
+- **Persistence**: Language preference stored in localStorage
+- **Components Translated**: Hero, Services, Contact, Footer, Header, Booking page
 
 ### Backend Architecture
 
