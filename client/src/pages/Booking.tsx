@@ -61,7 +61,7 @@ export default function Booking() {
     <div className="min-h-screen flex flex-col">
       <Header />
       
-      <main className="flex-1 pt-20">
+      <main className="flex-1 pt-24">
         <section className="bg-card border-b border-border py-12">
           <div className="max-w-7xl mx-auto px-4 sm:px-6">
             <Badge variant="secondary" className="mb-4">Våre Eiendommer</Badge>
@@ -82,7 +82,7 @@ export default function Booking() {
           </div>
         </section>
 
-        <section className="sticky top-16 md:top-20 z-40 bg-background border-b border-border py-4">
+        <section className="sticky top-20 md:top-24 z-40 bg-background border-b border-border py-4">
           <div className="max-w-7xl mx-auto px-4 sm:px-6">
             <div className="flex flex-col sm:flex-row gap-4">
               <div className="relative flex-1">

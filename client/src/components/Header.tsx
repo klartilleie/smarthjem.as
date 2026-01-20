@@ -39,12 +39,12 @@ export default function Header() {
       data-testid="header"
     >
       <div className="max-w-7xl mx-auto px-6 sm:px-8">
-        <div className="flex items-center justify-between gap-4 h-18 md:h-20">
+        <div className="flex items-center justify-between gap-4 h-20 md:h-24">
           <Link href="/" data-testid="link-logo">
             <img
               src={logoImage}
               alt="Smart Hjem AS"
-              className="h-10 md:h-12 w-auto"
+              className="h-12 md:h-16 w-auto"
             />
           </Link>
 
