@@ -1,32 +1,35 @@
 import { Card, CardContent } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Home, Building, TreePine, ArrowRight } from "lucide-react";
-
-const services = [
-  {
-    icon: TreePine,
-    title: "Hytter",
-    description: "Oppdag våre koselige hytter i naturskjønne omgivelser. Perfekt for ferie og avkobling med familie og venner.",
-    badge: "Populært",
-    gradient: "from-emerald-500/20 to-teal-500/20",
-  },
-  {
-    icon: Building,
-    title: "Leiligheter",
-    description: "Moderne og komfortable leiligheter på attraktive steder. Ideelt for både korte og lengre opphold.",
-    badge: "Sentralt",
-    gradient: "from-amber-500/20 to-orange-500/20",
-  },
-  {
-    icon: Home,
-    title: "Hus",
-    description: "Romslige feriehus med plass til hele familien. Nyt privatliv og hjemlige omgivelser på ferie.",
-    badge: "Familievennlig",
-    gradient: "from-blue-500/20 to-cyan-500/20",
-  },
-];
+import { useLanguage } from "@/contexts/LanguageContext";
 
 export default function Services() {
+  const { t } = useLanguage();
+
+  const services = [
+    {
+      icon: TreePine,
+      title: t.services.cabins.title,
+      description: t.services.cabins.description,
+      badge: t.services.cabins.badge,
+      gradient: "from-emerald-500/20 to-teal-500/20",
+    },
+    {
+      icon: Building,
+      title: t.services.apartments.title,
+      description: t.services.apartments.description,
+      badge: t.services.apartments.badge,
+      gradient: "from-amber-500/20 to-orange-500/20",
+    },
+    {
+      icon: Home,
+      title: t.services.houses.title,
+      description: t.services.houses.description,
+      badge: t.services.houses.badge,
+      gradient: "from-blue-500/20 to-cyan-500/20",
+    },
+  ];
+
   return (
     <section
       id="tjenester"
@@ -37,14 +40,13 @@ export default function Services() {
       
       <div className="max-w-7xl mx-auto px-6 sm:px-8 relative">
         <div className="text-center mb-16 md:mb-20">
-          <Badge variant="secondary" className="mb-6 px-4 py-1.5 text-sm">Vårt Utvalg</Badge>
+          <Badge variant="secondary" className="mb-6 px-4 py-1.5 text-sm">{t.services.badge}</Badge>
           <h2 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-bold mb-6 tracking-tight">
-            Ferieutleie
-            <span className="block text-primary mt-2">For Enhver Smak</span>
+            {t.services.title1}
+            <span className="block text-primary mt-2">{t.services.title2}</span>
           </h2>
           <p className="text-muted-foreground text-lg md:text-xl max-w-2xl mx-auto leading-relaxed">
-            Vi tilbyr et bredt utvalg av hytter, leiligheter og hus 
-            på fantastiske steder i Sør-Norge.
+            {t.services.subtitle}
           </p>
         </div>
 
@@ -76,7 +78,7 @@ export default function Services() {
                   className="inline-flex items-center gap-2 text-primary font-medium text-sm group/link"
                   data-testid={`link-service-${index}`}
                 >
-                  Kontakt Oss
+                  {t.services.contactUs}
                   <ArrowRight className="w-4 h-4 transition-transform group-hover/link:translate-x-1" />
                 </a>
               </CardContent>

@@ -1,9 +1,12 @@
 import { Link } from "wouter";
 import { Button } from "@/components/ui/button";
 import { CheckCircle, ArrowRight, Sparkles } from "lucide-react";
+import { useLanguage } from "@/contexts/LanguageContext";
 import heroImage from "@assets/stock_images/luxury_vacation_cabi_fd229fff.jpg";
 
 export default function Hero() {
+  const { t } = useLanguage();
+
   return (
     <section
       className="relative min-h-screen flex items-center justify-center overflow-hidden"
@@ -21,21 +24,20 @@ export default function Hero() {
             <div className="h-px flex-1 bg-gradient-to-r from-transparent via-primary/50 to-transparent max-w-24" />
             <span className="text-primary font-medium tracking-wide text-sm uppercase flex items-center gap-2">
               <Sparkles className="w-4 h-4" />
-              Innovative Løsninger
+              {t.hero.badge}
             </span>
             <div className="h-px flex-1 bg-gradient-to-r from-transparent via-primary/50 to-transparent max-w-24" />
           </div>
 
           <h1 className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-bold text-white mb-6 leading-[1.1] tracking-tight text-center">
-            Eiendomstjenester
+            {t.hero.title1}
             <span className="block bg-gradient-to-r from-primary via-amber-400 to-primary bg-clip-text text-transparent mt-2">
-              Skreddersydd for Deg
+              {t.hero.title2}
             </span>
           </h1>
 
           <p className="text-lg sm:text-xl text-white/80 max-w-3xl mx-auto mb-10 leading-relaxed text-center">
-            Vi kombinerer erfaring og lidenskap for å gjøre ideer til virkelighet. 
-            Med innovative løsninger hjelper vi deg å nå dine mål på en effektiv og personlig måte.
+            {t.hero.subtitle}
           </p>
 
           <div className="flex flex-col sm:flex-row items-center justify-center gap-4 mb-12">
@@ -45,18 +47,18 @@ export default function Hero() {
                 className="min-w-[220px] gap-2"
                 data-testid="button-hero-properties"
               >
-                Se Våre Eiendommer
+                {t.hero.cta}
                 <ArrowRight className="w-4 h-4" />
               </Button>
             </Link>
-            <a href="#tjenester">
+            <a href="#kontakt">
               <Button
                 variant="outline"
                 size="lg"
                 className="min-w-[220px] bg-white/5 border-white/20 text-white backdrop-blur-sm"
                 data-testid="button-hero-services"
               >
-                Utforsk Tjenester
+                {t.hero.ctaSecondary}
               </Button>
             </a>
           </div>
@@ -64,27 +66,16 @@ export default function Hero() {
           <div className="grid sm:grid-cols-3 gap-4 text-white/70 text-sm">
             <div className="flex items-center justify-center gap-2 backdrop-blur-md bg-white/5 rounded-xl py-3 px-4 border border-white/10">
               <CheckCircle className="w-4 h-4 text-primary flex-shrink-0" />
-              <span>Profesjonell Rådgivning</span>
+              <span>Smart Hjem AS</span>
             </div>
             <div className="flex items-center justify-center gap-2 backdrop-blur-md bg-white/5 rounded-xl py-3 px-4 border border-white/10">
               <CheckCircle className="w-4 h-4 text-primary flex-shrink-0" />
-              <span>Lokalkunnskap</span>
+              <span>16+ {t.nav.properties}</span>
             </div>
             <div className="flex items-center justify-center gap-2 backdrop-blur-md bg-white/5 rounded-xl py-3 px-4 border border-white/10">
               <CheckCircle className="w-4 h-4 text-primary flex-shrink-0" />
-              <span>Skreddersydde Løsninger</span>
+              <span>Booking.com, Airbnb, VRBO</span>
             </div>
-          </div>
-        </div>
-
-        <div className="flex justify-center gap-8 mt-12">
-          <div className="text-center backdrop-blur-md bg-white/5 rounded-2xl py-4 px-8 border border-white/10">
-            <div className="text-3xl md:text-4xl font-bold text-white">2000+</div>
-            <div className="text-white/60 text-sm mt-1">Tjenester Levert</div>
-          </div>
-          <div className="text-center backdrop-blur-md bg-white/5 rounded-2xl py-4 px-8 border border-white/10">
-            <div className="text-3xl md:text-4xl font-bold text-white">500+</div>
-            <div className="text-white/60 text-sm mt-1">Glade Kunder</div>
           </div>
         </div>
       </div>

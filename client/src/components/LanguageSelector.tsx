@@ -6,13 +6,13 @@ import {
   DropdownMenuItem,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
-import { Globe } from "lucide-react";
+import { Globe, Check } from "lucide-react";
 import type { Language } from "@/lib/translations";
 
-const languages: { code: Language; name: string; flag: string }[] = [
-  { code: "no", name: "Norsk", flag: "🇳🇴" },
-  { code: "en", name: "English", flag: "🇬🇧" },
-  { code: "de", name: "Deutsch", flag: "🇩🇪" },
+const languages: { code: Language; name: string; abbr: string }[] = [
+  { code: "no", name: "Norsk", abbr: "NO" },
+  { code: "en", name: "English", abbr: "EN" },
+  { code: "de", name: "Deutsch", abbr: "DE" },
 ];
 
 export default function LanguageSelector() {
@@ -30,7 +30,7 @@ export default function LanguageSelector() {
         >
           <Globe className="w-4 h-4" />
           <span className="hidden sm:inline">{currentLang?.name}</span>
-          <span className="sm:hidden">{language.toUpperCase()}</span>
+          <span className="sm:hidden">{currentLang?.abbr}</span>
         </Button>
       </DropdownMenuTrigger>
       <DropdownMenuContent align="end">
@@ -41,8 +41,9 @@ export default function LanguageSelector() {
             className={language === lang.code ? "bg-accent" : ""}
             data-testid={`menu-item-lang-${lang.code}`}
           >
-            <span className="mr-2">{lang.flag}</span>
-            {lang.name}
+            <span className="w-8 text-xs font-medium text-muted-foreground">{lang.abbr}</span>
+            <span className="flex-1">{lang.name}</span>
+            {language === lang.code && <Check className="w-4 h-4 text-primary" />}
           </DropdownMenuItem>
         ))}
       </DropdownMenuContent>

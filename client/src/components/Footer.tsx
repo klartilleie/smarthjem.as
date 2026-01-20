@@ -1,7 +1,9 @@
 import { Link } from "wouter";
+import { useLanguage } from "@/contexts/LanguageContext";
 import logoImage from "@assets/Smart_Hjem_As_-_FinalizedLogoD2L5_(Transparent)-01_1768943309700.png";
 
 export default function Footer() {
+  const { t } = useLanguage();
   const currentYear = new Date().getFullYear();
 
   return (
@@ -17,43 +19,36 @@ export default function Footer() {
               />
             </Link>
             <p className="text-muted-foreground text-sm leading-relaxed max-w-xs">
-              Vi kombinerer erfaring og lidenskap for å gjøre ideer til virkelighet. 
-              Din partner for pålitelige og skreddersydde eiendomsløsninger.
+              {t.footer.description}
             </p>
             <div className="flex gap-4 mt-6">
               <div className="text-center">
-                <div className="text-2xl font-bold text-primary">2000+</div>
-                <div className="text-xs text-muted-foreground">Tjenester</div>
-              </div>
-              <div className="text-center">
-                <div className="text-2xl font-bold text-primary">500+</div>
-                <div className="text-xs text-muted-foreground">Kunder</div>
+                <div className="text-2xl font-bold text-primary">16+</div>
+                <div className="text-xs text-muted-foreground">{t.nav.properties}</div>
               </div>
             </div>
           </div>
 
           <div>
-            <h3 className="font-semibold mb-5">Tjenester</h3>
+            <h3 className="font-semibold mb-5">{t.services.badge}</h3>
             <ul className="space-y-3 text-sm text-muted-foreground">
-              <li><a href="#tjenester" className="hover:text-foreground transition-colors" data-testid="link-footer-kontor">Utleie av Kontorlokaler</a></li>
-              <li><a href="#tjenester" className="hover:text-foreground transition-colors" data-testid="link-footer-elektrisk">Elektriske Installasjoner</a></li>
-              <li><a href="#tjenester" className="hover:text-foreground transition-colors" data-testid="link-footer-raadgivning">Eiendomsrådgivning</a></li>
-              <li><a href="#tjenester" className="hover:text-foreground transition-colors" data-testid="link-footer-vedlikehold">Vedlikeholdstjenester</a></li>
+              <li><a href="#tjenester" className="hover:text-foreground transition-colors" data-testid="link-footer-cabins">{t.services.cabins.title}</a></li>
+              <li><a href="#tjenester" className="hover:text-foreground transition-colors" data-testid="link-footer-apartments">{t.services.apartments.title}</a></li>
+              <li><a href="#tjenester" className="hover:text-foreground transition-colors" data-testid="link-footer-houses">{t.services.houses.title}</a></li>
             </ul>
           </div>
 
           <div>
-            <h3 className="font-semibold mb-5">Selskapet</h3>
+            <h3 className="font-semibold mb-5">{t.footer.quickLinks}</h3>
             <ul className="space-y-3 text-sm text-muted-foreground">
-              <li><a href="#" className="hover:text-foreground transition-colors" data-testid="link-footer-om">Om Oss</a></li>
-              <li><a href="#hvordan" className="hover:text-foreground transition-colors" data-testid="link-footer-hvordan">Hvordan Det Fungerer</a></li>
-              <li><Link href="/booking" className="hover:text-foreground transition-colors" data-testid="link-footer-eiendommer">Eiendommer</Link></li>
-              <li><a href="#kontakt" className="hover:text-foreground transition-colors" data-testid="link-footer-kontakt">Kontakt</a></li>
+              <li><Link href="/" className="hover:text-foreground transition-colors" data-testid="link-footer-home">{t.nav.home}</Link></li>
+              <li><Link href="/booking" className="hover:text-foreground transition-colors" data-testid="link-footer-eiendommer">{t.nav.properties}</Link></li>
+              <li><a href="#kontakt" className="hover:text-foreground transition-colors" data-testid="link-footer-kontakt">{t.nav.contact}</a></li>
             </ul>
           </div>
 
           <div>
-            <h3 className="font-semibold mb-5">Kontakt</h3>
+            <h3 className="font-semibold mb-5">{t.footer.contact}</h3>
             <ul className="space-y-3 text-sm text-muted-foreground">
               <li data-testid="text-footer-address">Norge</li>
               <li data-testid="text-footer-email">post@smarthjem.as</li>
@@ -68,13 +63,8 @@ export default function Footer() {
 
         <div className="border-t border-border/50 pt-8 flex flex-col sm:flex-row items-center justify-between gap-4">
           <p className="text-muted-foreground text-sm" data-testid="text-copyright">
-            {currentYear} Smart Hjem AS. Alle rettigheter reservert.
+            {currentYear} Smart Hjem AS. {t.footer.rights}
           </p>
-          <div className="flex items-center gap-6 text-sm text-muted-foreground">
-            <a href="#" className="hover:text-foreground transition-colors" data-testid="link-footer-personvern">Personvern</a>
-            <a href="#" className="hover:text-foreground transition-colors" data-testid="link-footer-vilkar">Vilkår</a>
-            <a href="#" className="hover:text-foreground transition-colors" data-testid="link-footer-cookies">Cookies</a>
-          </div>
         </div>
       </div>
     </footer>
