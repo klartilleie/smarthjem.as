@@ -98,17 +98,16 @@ export default function PropertyModal({ property, open, onClose }: PropertyModal
   if (!property) return null;
 
   const hasImages = property.images && property.images.length > 0;
-  const displayImages = hasImages ? property.images : ["/placeholder-property.jpg"];
 
   const nextImage = () => {
-    if (hasImages) {
-      setCurrentImage((prev) => (prev + 1) % displayImages.length);
+    if (hasImages && property.images.length > 1) {
+      setCurrentImage((prev) => (prev + 1) % property.images.length);
     }
   };
 
   const prevImage = () => {
-    if (hasImages) {
-      setCurrentImage((prev) => (prev - 1 + displayImages.length) % displayImages.length);
+    if (hasImages && property.images.length > 1) {
+      setCurrentImage((prev) => (prev - 1 + property.images.length) % property.images.length);
     }
   };
 
@@ -136,7 +135,7 @@ export default function PropertyModal({ property, open, onClose }: PropertyModal
           <div className="relative aspect-[16/10] overflow-hidden bg-muted">
             {hasImages ? (
               <img
-                src={displayImages[currentImage]}
+                src={property.images[currentImage]}
                 alt={`${property.name} - bilde ${currentImage + 1}`}
                 className="w-full h-full object-cover"
               />
@@ -144,11 +143,10 @@ export default function PropertyModal({ property, open, onClose }: PropertyModal
               <div className="w-full h-full flex items-center justify-center bg-gradient-to-br from-primary/10 to-primary/5">
                 <div className="text-center">
                   <Mountain className="w-16 h-16 text-primary/30 mx-auto mb-2" />
-                  <p className="text-muted-foreground text-sm">Bilde ikke tilgjengelig</p>
                 </div>
               </div>
             )}
-            {hasImages && displayImages.length > 1 && (
+            {hasImages && property.images.length > 1 && (
               <>
                 <Button
                   variant="secondary"
@@ -169,7 +167,7 @@ export default function PropertyModal({ property, open, onClose }: PropertyModal
                   <ChevronRight className="w-6 h-6" />
                 </Button>
                 <div className="absolute bottom-4 left-1/2 -translate-x-1/2 flex gap-1.5">
-                  {displayImages.map((_, i) => (
+                  {property.images.map((_, i) => (
                     <button
                       key={i}
                       className={`w-2 h-2 rounded-full transition-colors ${
@@ -194,7 +192,7 @@ export default function PropertyModal({ property, open, onClose }: PropertyModal
               </div>
               <h3 className="font-bold text-2xl mb-2">{t.modal.success.title}</h3>
               <p className="text-muted-foreground mb-6">
-                {t.modal.success.message.replace('{property}', property.name)}
+                {t.modal.success.message}
               </p>
               <Button onClick={handleClose} data-testid="button-close-booking">
                 {t.modal.success.close}
