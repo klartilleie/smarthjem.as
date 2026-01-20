@@ -11,13 +11,8 @@ export async function registerRoutes(
 
   app.get("/api/properties", async (req, res) => {
     try {
-      if (isBeds24Configured()) {
-        const beds24Properties = await fetchBeds24Properties();
-        if (beds24Properties.length > 0) {
-          await storage.setProperties(beds24Properties);
-        }
-      }
-      
+      // Always use the Booking.com fallback data which has images and descriptions
+      // Beds24 API doesn't provide photos, so we rely on the curated Booking.com data
       const properties = await storage.getProperties();
       res.json(properties);
     } catch (error) {
