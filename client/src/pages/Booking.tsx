@@ -31,7 +31,7 @@ export default function Booking() {
   });
 
   const locations = properties
-    ? [...new Set(properties.map((p) => p.location))]
+    ? Array.from(new Set(properties.map((p) => p.location)))
     : [];
 
   const filteredProperties = properties?.filter((property) => {
