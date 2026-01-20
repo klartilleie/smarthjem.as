@@ -79,12 +79,22 @@ Current schema includes:
 
 ### Property Data
 
-- 20 vacation rental properties managed by Smart Hjem AS are loaded from Beds24
-- Property data includes: names, locations (city), soverom/bad counts, amenities from feature codes
-- Beds24 feature codes are mapped to Norwegian amenities (WiFi, Kjøkken, Gratis Parkering, etc.)
-- Fallback images from Booking.com used when Beds24 doesn't provide photos
+- 40 vacation rental properties managed by Smart Hjem AS:
+  - 12 Beds24-integrated properties with Booking.com images
+  - 28 norges-ferie.no properties with external URL references
+- Property data includes: names, locations (city), soverom/bad counts, amenities
+- Properties with `externalUrl` link to original listings on norges-ferie.no
 - **Pricing**: Prices are dynamic and vary by season/dates. UI shows "Se priser" or "Kontakt for priser"
-- Properties listed on multiple platforms: Booking.com, Airbnb, VRBO, Finn.no
+- Properties listed on multiple platforms: Booking.com, Airbnb, VRBO, Finn.no, norges-ferie.no
+
+### Email Notifications (Resend)
+
+- **Provider**: Resend (configured via `Resend_API` secret)
+- **From**: booking@smarthjem.as
+- **To**: kundeservice@smarthjem.as
+- **Trigger**: Booking requests for properties without Beds24 integration
+- Properties with Beds24 links use Beds24 API for booking creation
+- All other properties send email notification to customer service
 
 ### Key NPM Packages
 
