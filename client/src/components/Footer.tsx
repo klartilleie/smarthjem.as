@@ -21,12 +21,6 @@ export default function Footer() {
             <p className="text-muted-foreground text-sm leading-relaxed max-w-xs">
               {t.footer.description}
             </p>
-            <div className="flex gap-4 mt-6">
-              <div className="text-center">
-                <div className="text-2xl font-bold text-primary">1600+</div>
-                <div className="text-xs text-muted-foreground">{t.nav.properties}</div>
-              </div>
-            </div>
           </div>
 
           <div>
