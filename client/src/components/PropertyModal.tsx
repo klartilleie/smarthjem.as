@@ -22,7 +22,7 @@ import { apiRequest } from "@/lib/queryClient";
 import { bookingRequestSchema, type Property, type BookingRequest } from "@shared/schema";
 import {
   MapPin, Users, Bed, Bath, Wifi, Key, Sparkles, Car, Mountain,
-  ChevronLeft, ChevronRight, CheckCircle, ExternalLink
+  ChevronLeft, ChevronRight, CheckCircle
 } from "lucide-react";
 
 interface PropertyModalProps {
@@ -117,12 +117,6 @@ export default function PropertyModal({ property, open, onClose }: PropertyModal
     setCurrentImage(0);
     form.reset();
     onClose();
-  };
-
-  const handleExternalLink = () => {
-    if (property.externalUrl) {
-      window.open(property.externalUrl, '_blank', 'noopener,noreferrer');
-    }
   };
 
   return (
@@ -482,19 +476,6 @@ export default function PropertyModal({ property, open, onClose }: PropertyModal
                 >
                   {property.available ? t.modal.sendBookingRequest : t.modal.notAvailable}
                 </Button>
-                
-                {property.externalUrl && (
-                  <Button
-                    variant="outline"
-                    className="w-full"
-                    size="lg"
-                    onClick={handleExternalLink}
-                    data-testid="button-external-link"
-                  >
-                    <ExternalLink className="w-4 h-4 mr-2" />
-                    {t.modal.viewOnExternalSite}
-                  </Button>
-                )}
               </div>
             </>
           )}
