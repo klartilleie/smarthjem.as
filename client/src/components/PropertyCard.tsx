@@ -25,7 +25,7 @@ export default function PropertyCard({ property, onSelect }: PropertyCardProps) 
         <div className="absolute top-4 right-4">
           <Badge className="bg-primary text-primary-foreground shadow-lg">
             {property.pricePerNight > 0 
-              ? `kr ${property.pricePerNight.toLocaleString()}/natt`
+              ? `${property.location.includes("Spain") ? "€" : "kr"} ${property.pricePerNight.toLocaleString()}/natt`
               : "Se priser"}
           </Badge>
         </div>

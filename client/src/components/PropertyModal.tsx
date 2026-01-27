@@ -414,7 +414,7 @@ export default function PropertyModal({ property, open, onClose }: PropertyModal
                   </div>
                   <Badge className="text-lg px-4 py-2 bg-primary text-primary-foreground">
                     {property.pricePerNight > 0 
-                      ? `kr ${property.pricePerNight.toLocaleString()}${t.modal.perNight}`
+                      ? `${property.location.includes("Spain") ? "€" : "kr"} ${property.pricePerNight.toLocaleString()}${t.modal.perNight}`
                       : t.modal.contactForPrices}
                   </Badge>
                 </div>
