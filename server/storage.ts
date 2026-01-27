@@ -127,7 +127,7 @@ const realProperties: Property[] = [
     maxGuests: 5,
     pricePerNight: 0,
     images: [
-      "https://cf.bstatic.com/xdata/images/hotel/max1024x768/276087498.jpg?k=e6f08ec13ce8dd4e86cdac7cbe6d0f15a63e2eb982bdaf3c2bfae1a8a8b5c6d7&o=",
+      "/stock_images/cabin-sea-1_1.jpg",
     ],
     amenities: ["WiFi", "Gratis Parkering", "Terrasse", "Kjøkken", "TV", "Vaskemaskin", "Utsikt"],
     available: true,
@@ -142,7 +142,7 @@ const realProperties: Property[] = [
     maxGuests: 5,
     pricePerNight: 0,
     images: [
-      "https://cf.bstatic.com/xdata/images/hotel/max1024x768/260874956.jpg?k=8b9c0d1e2f3a4b5c6d7e8f9a0b1c2d3e4f5a6b7c8d9e0f1a2b3c4d5e6f7a8b9&o=",
+      "/stock_images/cabin-sea-1_2.jpg",
     ],
     amenities: ["WiFi", "Gratis Parkering", "Sjøutsikt", "Terrasse", "Kjøkken", "TV"],
     available: true,
@@ -157,7 +157,7 @@ const realProperties: Property[] = [
     maxGuests: 6,
     pricePerNight: 0,
     images: [
-      "https://cf.bstatic.com/xdata/images/hotel/max1024x768/252098736.jpg?k=9a0b1c2d3e4f5a6b7c8d9e0f1a2b3c4d5e6f7a8b9c0d1e2f3a4b5c6d7e8f9a0&o=",
+      "/stock_images/cabin-sea-1_3.jpg",
     ],
     amenities: ["WiFi", "Gratis Parkering", "Utsikt", "Terrasse", "Kjøkken", "TV", "Vaskemaskin"],
     available: true,
@@ -990,7 +990,7 @@ const realProperties: Property[] = [
     maxGuests: 6,
     pricePerNight: 0,
     images: [
-      "https://usercontent.one/wp/furrehytter.no/wp-content/uploads/2024/11/hytte-1.jpg",
+      "/stock_images/cabin-red-1_1.jpg",
     ],
     amenities: ["Sjøutsikt", "Bryggekant", "Kjøkken", "TV", "WiFi", "Båtutleie", "Fiske"],
     available: true,
@@ -1006,7 +1006,7 @@ const realProperties: Property[] = [
     maxGuests: 4,
     pricePerNight: 0,
     images: [
-      "https://usercontent.one/wp/furrehytter.no/wp-content/uploads/2024/11/hytte-2-1.jpg",
+      "/stock_images/cabin-red-1_2.jpg",
     ],
     amenities: ["Sjøutsikt", "Bryggekant", "Kjøkken", "TV", "WiFi", "Båtutleie"],
     available: true,
@@ -1022,7 +1022,7 @@ const realProperties: Property[] = [
     maxGuests: 4,
     pricePerNight: 0,
     images: [
-      "https://usercontent.one/wp/furrehytter.no/wp-content/uploads/2024/11/hytte-3.jpg",
+      "/stock_images/cabin-red-1_3.jpg",
     ],
     amenities: ["Sjøutsikt", "Bryggekant", "Grill", "Kjøkken", "TV", "WiFi"],
     available: true,
@@ -1038,7 +1038,7 @@ const realProperties: Property[] = [
     maxGuests: 4,
     pricePerNight: 0,
     images: [
-      "https://usercontent.one/wp/furrehytter.no/wp-content/uploads/2024/11/20150502_115507.jpg",
+      "/stock_images/cabin-red-1_4.jpg",
     ],
     amenities: ["Panoramautsikt", "Terrasse", "Rolig", "Kjøkken", "TV", "WiFi"],
     available: true,
@@ -1054,7 +1054,7 @@ const realProperties: Property[] = [
     maxGuests: 6,
     pricePerNight: 0,
     images: [
-      "https://usercontent.one/wp/furrehytter.no/wp-content/uploads/2024/11/H5_H6_Oversikt-scaled.jpg",
+      "/stock_images/cabin-red-1_5.jpg",
     ],
     amenities: ["Sjøutsikt", "Gratis Parkering", "Kjøkken", "TV", "WiFi", "Familievennlig"],
     available: true,
@@ -1070,7 +1070,7 @@ const realProperties: Property[] = [
     maxGuests: 6,
     pricePerNight: 0,
     images: [
-      "https://usercontent.one/wp/furrehytter.no/wp-content/uploads/2024/11/H6_Terrasse-scaled.jpg",
+      "/stock_images/cabin-red-1_6.jpg",
     ],
     amenities: ["Sjøutsikt", "Terrasse", "Gratis Parkering", "Kjøkken", "TV", "WiFi"],
     available: true,
@@ -1086,7 +1086,7 @@ const realProperties: Property[] = [
     maxGuests: 10,
     pricePerNight: 0,
     images: [
-      "https://usercontent.one/wp/furrehytter.no/wp-content/uploads/2024/11/7-front2.jpg",
+      "/stock_images/cabin-red-1_7.jpg",
     ],
     amenities: ["Sjøutsikt", "Badstu", "Gulvvarme", "2 Bad", "Kjøkken", "TV", "WiFi", "Stor"],
     available: true,
@@ -1102,7 +1102,7 @@ const realProperties: Property[] = [
     maxGuests: 8,
     pricePerNight: 0,
     images: [
-      "https://usercontent.one/wp/furrehytter.no/wp-content/uploads/2024/11/H8_Front.jpg",
+      "/stock_images/cabin-red-1_8.jpg",
     ],
     amenities: ["Sjøutsikt", "Stor Terrasse", "Chromecast", "Oppvaskmaskin", "Kjøkken", "TV", "WiFi"],
     available: true,
@@ -1118,7 +1118,7 @@ const realProperties: Property[] = [
     maxGuests: 10,
     pricePerNight: 0,
     images: [
-      "https://usercontent.one/wp/furrehytter.no/wp-content/uploads/2024/11/img_9708.jpg",
+      "/stock_images/cabin-red-1_9.jpg",
     ],
     amenities: ["Sjøutsikt", "Gulvvarme", "2 Bad", "Kjøkken", "TV", "WiFi", "Stor"],
     available: true,
@@ -1134,7 +1134,7 @@ const realProperties: Property[] = [
     maxGuests: 4,
     pricePerNight: 0,
     images: [
-      "https://usercontent.one/wp/furrehytter.no/wp-content/uploads/2024/11/H15_Front-scaled.jpg",
+      "/stock_images/cabin-red-1_10.jpg",
     ],
     amenities: ["Bryggekant", "Luksus", "Peis", "Flislagt", "Kjøkken", "TV", "WiFi"],
     available: true,
@@ -1150,7 +1150,7 @@ const realProperties: Property[] = [
     maxGuests: 4,
     pricePerNight: 0,
     images: [
-      "https://usercontent.one/wp/furrehytter.no/wp-content/uploads/2024/11/hytte-nr16-stor2.jpg",
+      "/stock_images/cabin-luxury-1_1.jpg",
     ],
     amenities: ["Bryggekant", "Luksus", "Peis", "Flislagt", "Kjøkken", "TV", "WiFi"],
     available: true,
@@ -1166,7 +1166,7 @@ const realProperties: Property[] = [
     maxGuests: 2,
     pricePerNight: 0,
     images: [
-      "https://usercontent.one/wp/furrehytter.no/wp-content/uploads/2024/11/19-front.jpg",
+      "/stock_images/cabin-luxury-1_2.jpg",
     ],
     amenities: ["Bryggekant", "Gulvvarme", "Flislagt", "Kjøkken", "TV", "WiFi", "Koselig"],
     available: true,
@@ -1182,7 +1182,7 @@ const realProperties: Property[] = [
     maxGuests: 2,
     pricePerNight: 0,
     images: [
-      "https://usercontent.one/wp/furrehytter.no/wp-content/uploads/2024/11/20-front.jpg",
+      "/stock_images/cabin-luxury-1_3.jpg",
     ],
     amenities: ["Bryggekant", "Moderne", "Flislagt", "Kjøkken", "TV", "WiFi"],
     available: true,
@@ -1198,7 +1198,7 @@ const realProperties: Property[] = [
     maxGuests: 12,
     pricePerNight: 0,
     images: [
-      "https://usercontent.one/wp/furrehytter.no/wp-content/uploads/2024/11/21_Front.jpg",
+      "/stock_images/cabin-luxury-1_4.jpg",
     ],
     amenities: ["Panoramautsikt", "Stor Terrasse", "Badekar", "2 Bad", "TV-stue", "Kjøkken", "WiFi", "Premium"],
     available: true,
