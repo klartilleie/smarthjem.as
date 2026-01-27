@@ -79,13 +79,14 @@ Current schema includes:
 
 ### Property Data
 
-- 40 vacation rental properties managed by Smart Hjem AS:
-  - 12 Beds24-integrated properties with Booking.com images
-  - 28 norges-ferie.no properties with external URL references
-- Property data includes: names, locations (city), soverom/bad counts, amenities
-- Properties with `externalUrl` link to original listings on norges-ferie.no
-- **Pricing**: Prices are dynamic and vary by season/dates. UI shows "Se priser" or "Kontakt for priser"
-- Properties listed on multiple platforms: Booking.com, Airbnb, VRBO, Finn.no, norges-ferie.no
+- 59 vacation rental properties managed by Smart Hjem AS:
+  - 12 Beds24-integrated properties with Booking.com images (Southern Norway)
+  - 28 norges-ferie.no properties with external URL references (Southern Norway)
+  - 19 holidaysinspain4u.com properties (Costa Blanca, Spain)
+- Property data includes: names, locations (city), beds/bathrooms counts, amenities
+- Properties with `externalUrl` link to original listings
+- **Pricing**: Norwegian properties show "Kontakt for priser", Spain properties have per-night rates
+- Properties listed on multiple platforms: Booking.com, Airbnb, VRBO, Finn.no, norges-ferie.no, holidaysinspain4u.com
 
 ### Email Notifications (Resend)
 
