@@ -151,27 +151,32 @@ export default function PropertyModal({ property, open, onClose }: PropertyModal
                 <Button
                   variant="secondary"
                   size="icon"
-                  className="absolute left-2 top-1/2 -translate-y-1/2"
+                  className="absolute left-3 top-1/2 -translate-y-1/2 h-12 w-12 rounded-full bg-black/60 hover:bg-black/80 text-white shadow-lg"
                   onClick={prevImage}
                   data-testid="button-prev-image"
                 >
-                  <ChevronLeft className="w-6 h-6" />
+                  <ChevronLeft className="w-7 h-7" />
                 </Button>
                 <Button
                   variant="secondary"
                   size="icon"
-                  className="absolute right-2 top-1/2 -translate-y-1/2"
+                  className="absolute right-3 top-1/2 -translate-y-1/2 h-12 w-12 rounded-full bg-black/60 hover:bg-black/80 text-white shadow-lg"
                   onClick={nextImage}
                   data-testid="button-next-image"
                 >
-                  <ChevronRight className="w-6 h-6" />
+                  <ChevronRight className="w-7 h-7" />
                 </Button>
-                <div className="absolute bottom-4 left-1/2 -translate-x-1/2 flex gap-1.5">
+                <div className="absolute top-3 right-3 bg-black/70 text-white px-3 py-1.5 rounded-full text-sm font-medium">
+                  {currentImage + 1} / {property.images.length}
+                </div>
+                <div className="absolute bottom-4 left-1/2 -translate-x-1/2 flex gap-2 bg-black/40 px-3 py-2 rounded-full">
                   {property.images.map((_, i) => (
                     <button
                       key={i}
-                      className={`w-2 h-2 rounded-full transition-colors ${
-                        i === currentImage ? "bg-white" : "bg-white/50"
+                      className={`w-3 h-3 rounded-full transition-all ${
+                        i === currentImage 
+                          ? "bg-white scale-110 ring-2 ring-white/50" 
+                          : "bg-white/50 hover:bg-white/80"
                       }`}
                       onClick={() => setCurrentImage(i)}
                       data-testid={`button-image-dot-${i}`}
@@ -182,6 +187,32 @@ export default function PropertyModal({ property, open, onClose }: PropertyModal
               </>
             )}
           </div>
+          
+          {hasImages && property.images.length > 1 && (
+            <div className="bg-muted/50 p-3">
+              <div className="flex gap-2 overflow-x-auto pb-1">
+                {property.images.map((img, i) => (
+                  <button
+                    key={i}
+                    className={`flex-shrink-0 w-20 h-14 rounded-lg overflow-hidden transition-all ${
+                      i === currentImage 
+                        ? "ring-2 ring-primary ring-offset-2 opacity-100" 
+                        : "opacity-60 hover:opacity-100"
+                    }`}
+                    onClick={() => setCurrentImage(i)}
+                    data-testid={`button-thumbnail-${i}`}
+                    aria-label={`Velg bilde ${i + 1}`}
+                  >
+                    <img
+                      src={img}
+                      alt={`${property.name} miniatyrbilde ${i + 1}`}
+                      className="w-full h-full object-cover"
+                    />
+                  </button>
+                ))}
+              </div>
+            </div>
+          )}
         </div>
 
         <div className="p-6">
