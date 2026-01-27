@@ -125,6 +125,9 @@ export const translations = {
       bedrooms: "soverom",
       bathrooms: "bad",
       maxGuests: "Maks gjester",
+      cleaningFee: "Rengjøringsgebyr",
+      cleaningFeeAmount: "kr 2 650 / € 225",
+      cleaningFeeNote: "Alle eiendommer har et rengjøringsgebyr som kommer i tillegg til leieprisen.",
       bookingForm: {
         title: "Book",
         checkIn: "Innsjekking",
@@ -277,6 +280,9 @@ export const translations = {
       bedrooms: "bedrooms",
       bathrooms: "bathrooms",
       maxGuests: "Max guests",
+      cleaningFee: "Cleaning fee",
+      cleaningFeeAmount: "NOK 2,650 / € 225",
+      cleaningFeeNote: "All properties have a cleaning fee in addition to the rental price.",
       bookingForm: {
         title: "Book",
         checkIn: "Check-in",
@@ -429,6 +435,9 @@ export const translations = {
       bedrooms: "Schlafzimmer",
       bathrooms: "Badezimmer",
       maxGuests: "Max Gäste",
+      cleaningFee: "Reinigungsgebühr",
+      cleaningFeeAmount: "NOK 2.650 / € 225",
+      cleaningFeeNote: "Für alle Unterkünfte fällt eine Reinigungsgebühr zusätzlich zum Mietpreis an.",
       bookingForm: {
         title: "Buchen",
         checkIn: "Anreise",

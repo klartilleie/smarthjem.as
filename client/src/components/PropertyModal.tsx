@@ -461,6 +461,17 @@ export default function PropertyModal({ property, open, onClose }: PropertyModal
                 </div>
               </div>
 
+              <Separator className="my-6" />
+
+              <div className="bg-amber-50 dark:bg-amber-950/30 border border-amber-200 dark:border-amber-800 rounded-lg p-4">
+                <h4 className="font-semibold mb-2 flex items-center gap-2">
+                  <CheckCircle className="w-4 h-4 text-primary" />
+                  {t.modal.cleaningFee}
+                </h4>
+                <p className="text-lg font-bold text-primary mb-1">{t.modal.cleaningFeeAmount}</p>
+                <p className="text-sm text-muted-foreground">{t.modal.cleaningFeeNote}</p>
+              </div>
+
               <div className="mt-8 flex flex-col gap-3">
                 <Button
                   className="w-full"
