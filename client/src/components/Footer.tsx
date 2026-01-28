@@ -55,7 +55,21 @@ export default function Footer() {
           </div>
         </div>
 
-        <div className="border-t border-border/50 pt-8 flex flex-col sm:flex-row items-center justify-between gap-4">
+        <div className="border-t border-border/50 pt-8 pb-8 flex flex-col items-center gap-6">
+          <a 
+            href="https://www.dropbox.com/request/9W81hTtZdazD7rp3k65n" 
+            target="_blank" 
+            rel="noopener noreferrer"
+            className="inline-flex items-center gap-2 px-6 py-3 bg-primary text-primary-foreground rounded-md font-medium hover:bg-primary/90 transition-colors"
+            data-testid="button-send-photos"
+          >
+            <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+              <rect x="3" y="3" width="18" height="18" rx="2" ry="2"/>
+              <circle cx="8.5" cy="8.5" r="1.5"/>
+              <polyline points="21 15 16 10 5 21"/>
+            </svg>
+            Send oss bilder
+          </a>
           <p className="text-muted-foreground text-sm" data-testid="text-copyright">
             {currentYear} Smart Hjem AS. {t.footer.rights}
           </p>
