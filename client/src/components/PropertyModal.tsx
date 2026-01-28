@@ -483,7 +483,7 @@ export default function PropertyModal({ property, open, onClose }: PropertyModal
                       className="flex items-center gap-2 text-sm bg-muted px-3 py-2 rounded-md"
                     >
                       {amenityIcons[amenity] || <CheckCircle className="w-4 h-4 text-primary" />}
-                      {amenity}
+                      {t.amenityNames?.[amenity] || amenity}
                     </div>
                   ))}
                 </div>
