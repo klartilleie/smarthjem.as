@@ -48,6 +48,24 @@ Key API endpoints:
 - `POST /api/contact` - Submit contact form
 - `POST /api/bookings` - Submit booking request
 
+Admin API endpoints (require authentication):
+- `POST /api/admin/login` - Admin login
+- `POST /api/admin/logout` - Admin logout
+- `GET /api/admin/session` - Check admin session
+- `POST /api/admin/properties` - Add new property
+- `PUT /api/admin/properties/:id` - Update property
+- `DELETE /api/admin/properties/:id` - Delete property
+
+### Admin System
+
+- **Access**: Admin link in footer → /admin/login → /admin dashboard
+- **Credentials**: Configurable via ADMIN_EMAIL and ADMIN_PASSWORD environment variables (defaults: Kundeservice@smarthjem.as / Admin2026)
+- **Session**: Express-session with httpOnly cookies, SameSite=lax, 24-hour expiry
+- **Features**: Property CRUD operations (add, edit, delete properties)
+- **Key Files**:
+  - `client/src/pages/AdminLogin.tsx` - Login page
+  - `client/src/pages/Admin.tsx` - Dashboard with property management
+
 ### Data Storage
 
 - **Database**: PostgreSQL (configured via `DATABASE_URL` environment variable)
