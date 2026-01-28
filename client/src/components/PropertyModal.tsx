@@ -22,7 +22,10 @@ import { apiRequest } from "@/lib/queryClient";
 import { bookingRequestSchema, type Property, type BookingRequest } from "@shared/schema";
 import {
   MapPin, Users, Bed, Bath, Wifi, Key, Sparkles, Car, Mountain,
-  ChevronLeft, ChevronRight, CheckCircle
+  ChevronLeft, ChevronRight, CheckCircle, Tv, Dog, Trees, Home,
+  UtensilsCrossed, Flame, WashingMachine, Waves, Anchor, Baby,
+  Heart, Sun, Snowflake, Coffee, Sofa, Wind, Shirt, GlassWater,
+  Fence, Umbrella
 } from "lucide-react";
 
 interface PropertyModalProps {
@@ -38,8 +41,39 @@ const amenityIcons: Record<string, React.ReactNode> = {
   "Parkering": <Car className="w-4 h-4" />,
   "Gratis Parkering": <Car className="w-4 h-4" />,
   "Utsikt": <Mountain className="w-4 h-4" />,
-  "Sjøutsikt": <Mountain className="w-4 h-4" />,
+  "Sjøutsikt": <Waves className="w-4 h-4" />,
   "Fjellutsikt": <Mountain className="w-4 h-4" />,
+  "Panoramautsikt": <Mountain className="w-4 h-4" />,
+  "Hageutsikt": <Trees className="w-4 h-4" />,
+  "TV": <Tv className="w-4 h-4" />,
+  "Kjæledyr Tillatt": <Dog className="w-4 h-4" />,
+  "Terrasse": <Fence className="w-4 h-4" />,
+  "Balkong": <Home className="w-4 h-4" />,
+  "Hage": <Trees className="w-4 h-4" />,
+  "Kjøkken": <UtensilsCrossed className="w-4 h-4" />,
+  "Grill": <Flame className="w-4 h-4" />,
+  "Peis": <Flame className="w-4 h-4" />,
+  "Vaskemaskin": <WashingMachine className="w-4 h-4" />,
+  "Oppvaskmaskin": <GlassWater className="w-4 h-4" />,
+  "Boblebad": <Waves className="w-4 h-4" />,
+  "Spa": <Waves className="w-4 h-4" />,
+  "Strand": <Umbrella className="w-4 h-4" />,
+  "Strandfront": <Umbrella className="w-4 h-4" />,
+  "Strandnært": <Umbrella className="w-4 h-4" />,
+  "Båtplass": <Anchor className="w-4 h-4" />,
+  "Båtutleie": <Anchor className="w-4 h-4" />,
+  "Lekeplass": <Baby className="w-4 h-4" />,
+  "Familievennlig": <Heart className="w-4 h-4" />,
+  "Solrik": <Sun className="w-4 h-4" />,
+  "Solterrasse": <Sun className="w-4 h-4" />,
+  "Vintersport": <Snowflake className="w-4 h-4" />,
+  "Kaffetrakter": <Coffee className="w-4 h-4" />,
+  "Stue": <Sofa className="w-4 h-4" />,
+  "Aircondition": <Wind className="w-4 h-4" />,
+  "Varmepumpe": <Wind className="w-4 h-4" />,
+  "Moderne": <Sparkles className="w-4 h-4" />,
+  "Bilfritt": <Trees className="w-4 h-4" />,
+  "Flyplasstransport": <Car className="w-4 h-4" />,
 };
 
 export default function PropertyModal({ property, open, onClose }: PropertyModalProps) {
