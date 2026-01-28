@@ -79,6 +79,12 @@ export default function Header() {
               {theme === "dark" ? <Sun className="h-5 w-5" /> : <Moon className="h-5 w-5" />}
             </Button>
 
+            <a href="https://klartilleie.no" target="_blank" rel="noopener noreferrer" className="hidden lg:block">
+              <Button variant="outline" data-testid="button-huseier-header">
+                Huseier
+              </Button>
+            </a>
+
             <Link href="/#kontakt" className="hidden lg:block">
               <Button data-testid="button-contact-header">
                 {t.nav.contact}
@@ -113,8 +119,13 @@ export default function Header() {
                       </Button>
                     </Link>
                   ))}
+                  <a href="https://klartilleie.no" target="_blank" rel="noopener noreferrer" onClick={() => setMobileOpen(false)}>
+                    <Button variant="outline" className="w-full mt-4" data-testid="mobile-button-huseier">
+                      Huseier
+                    </Button>
+                  </a>
                   <Link href="/#kontakt" onClick={() => setMobileOpen(false)}>
-                    <Button className="w-full mt-4" data-testid="mobile-button-contact">
+                    <Button className="w-full mt-2" data-testid="mobile-button-contact">
                       {t.nav.contact}
                     </Button>
                   </Link>
