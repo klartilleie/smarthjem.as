@@ -73,6 +73,11 @@ export default function Footer() {
           <p className="text-muted-foreground text-sm" data-testid="text-copyright">
             {currentYear} Smart Hjem AS. {t.footer.rights}
           </p>
+          <Link href="/admin/login">
+            <span className="text-muted-foreground/50 text-xs hover:text-muted-foreground transition-colors cursor-pointer" data-testid="link-admin">
+              Admin
+            </span>
+          </Link>
         </div>
       </div>
     </footer>

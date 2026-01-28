@@ -1,9 +1,22 @@
-import type { Express } from "express";
+import type { Express, Request, Response, NextFunction } from "express";
 import { createServer, type Server } from "http";
 import { storage } from "./storage";
-import { contactFormSchema, bookingRequestSchema } from "@shared/schema";
+import { contactFormSchema, bookingRequestSchema, propertySchema } from "@shared/schema";
 import { fetchBeds24Properties, createBeds24Booking, isBeds24Configured } from "./beds24";
 import { Resend } from "resend";
+
+// Admin credentials from environment or defaults for development
+const ADMIN_EMAIL = process.env.ADMIN_EMAIL || "Kundeservice@smarthjem.as";
+const ADMIN_PASSWORD = process.env.ADMIN_PASSWORD || "Admin2026";
+
+// Middleware to check admin authentication
+function requireAdmin(req: Request, res: Response, next: NextFunction) {
+  if (req.session?.isAdmin) {
+    next();
+  } else {
+    res.status(401).json({ error: "Unauthorized" });
+  }
+}
 
 const resend = process.env.Resend_API ? new Resend(process.env.Resend_API) : null;
 
@@ -186,6 +199,87 @@ export async function registerRoutes(
       status: "ok",
       beds24Configured: isBeds24Configured()
     });
+  });
+
+  // === ADMIN AUTHENTICATION ROUTES ===
+  
+  app.post("/api/admin/login", (req, res) => {
+    const { email, password } = req.body;
+    
+    if (email === ADMIN_EMAIL && password === ADMIN_PASSWORD) {
+      req.session.isAdmin = true;
+      req.session.adminEmail = email;
+      res.json({ success: true, message: "Logged in successfully" });
+    } else {
+      res.status(401).json({ error: "Invalid credentials" });
+    }
+  });
+
+  app.post("/api/admin/logout", (req, res) => {
+    req.session.destroy((err) => {
+      if (err) {
+        res.status(500).json({ error: "Failed to logout" });
+      } else {
+        res.json({ success: true, message: "Logged out successfully" });
+      }
+    });
+  });
+
+  app.get("/api/admin/session", (req, res) => {
+    res.json({ 
+      isAdmin: !!req.session?.isAdmin,
+      email: req.session?.adminEmail || null
+    });
+  });
+
+  // === ADMIN PROPERTY MANAGEMENT ROUTES ===
+
+  app.post("/api/admin/properties", requireAdmin, async (req, res) => {
+    try {
+      const result = propertySchema.safeParse(req.body);
+      if (!result.success) {
+        return res.status(400).json({ error: result.error.issues });
+      }
+
+      const property = await storage.addProperty(result.data);
+      res.json({ success: true, property });
+    } catch (error) {
+      console.error("Error adding property:", error);
+      res.status(500).json({ error: "Failed to add property" });
+    }
+  });
+
+  app.put("/api/admin/properties/:id", requireAdmin, async (req, res) => {
+    try {
+      const result = propertySchema.partial().safeParse(req.body);
+      if (!result.success) {
+        return res.status(400).json({ error: result.error.issues });
+      }
+
+      const propertyId = Array.isArray(req.params.id) ? req.params.id[0] : req.params.id;
+      const property = await storage.updateProperty(propertyId, result.data);
+      if (!property) {
+        return res.status(404).json({ error: "Property not found" });
+      }
+      res.json({ success: true, property });
+    } catch (error) {
+      console.error("Error updating property:", error);
+      res.status(500).json({ error: "Failed to update property" });
+    }
+  });
+
+  app.delete("/api/admin/properties/:id", requireAdmin, async (req, res) => {
+    try {
+      const propertyId = Array.isArray(req.params.id) ? req.params.id[0] : req.params.id;
+      const success = await storage.deleteProperty(propertyId);
+      if (!success) {
+        return res.status(404).json({ error: "Property not found" });
+      }
+      res.json({ success: true, message: "Property deleted" });
+    } catch (error) {
+      console.error("Error deleting property:", error);
+      res.status(500).json({ error: "Failed to delete property" });
+    }
   });
 
   return httpServer;

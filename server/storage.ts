@@ -8,6 +8,9 @@ export interface IStorage {
   getProperties(): Promise<Property[]>;
   getProperty(id: string): Promise<Property | undefined>;
   setProperties(properties: Property[]): Promise<void>;
+  addProperty(property: Property): Promise<Property>;
+  updateProperty(id: string, property: Partial<Property>): Promise<Property | undefined>;
+  deleteProperty(id: string): Promise<boolean>;
   saveContactForm(form: ContactForm): Promise<void>;
   saveBookingRequest(booking: BookingRequest): Promise<void>;
 }
@@ -1363,6 +1366,27 @@ export class MemStorage implements IStorage {
 
   async setProperties(properties: Property[]): Promise<void> {
     this.properties = properties;
+  }
+
+  async addProperty(property: Property): Promise<Property> {
+    this.properties.unshift(property);
+    return property;
+  }
+
+  async updateProperty(id: string, updates: Partial<Property>): Promise<Property | undefined> {
+    const index = this.properties.findIndex((p) => p.id === id);
+    if (index === -1) return undefined;
+    
+    this.properties[index] = { ...this.properties[index], ...updates };
+    return this.properties[index];
+  }
+
+  async deleteProperty(id: string): Promise<boolean> {
+    const index = this.properties.findIndex((p) => p.id === id);
+    if (index === -1) return false;
+    
+    this.properties.splice(index, 1);
+    return true;
   }
 
   async saveContactForm(form: ContactForm): Promise<void> {
