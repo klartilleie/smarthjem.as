@@ -3,6 +3,7 @@ import session from "express-session";
 import { registerRoutes } from "./routes";
 import { serveStatic } from "./static";
 import { createServer } from "http";
+import { storage } from "./storage";
 
 declare module "express-session" {
   interface SessionData {
@@ -82,6 +83,11 @@ app.use((req, res, next) => {
 });
 
 (async () => {
+  // Seed the database with properties if empty
+  if ('seedFromMemory' in storage) {
+    await (storage as any).seedFromMemory();
+  }
+
   await registerRoutes(httpServer, app);
 
   app.use((err: any, _req: Request, res: Response, next: NextFunction) => {

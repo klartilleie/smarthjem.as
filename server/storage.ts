@@ -1554,8 +1554,23 @@ export class DatabaseStorage implements IStorage {
     const existing = await db.select().from(propertiesTable).limit(1);
     if (existing.length === 0) {
       console.log("Database is empty, seeding with properties from memory...");
-      await this.setProperties(realProperties);
-      console.log(`Seeded ${realProperties.length} properties to database.`);
+      // Filter out duplicate IDs before seeding
+      const seenIds = new Set<string>();
+      const uniqueProperties = realProperties.filter(p => {
+        if (seenIds.has(p.id)) return false;
+        seenIds.add(p.id);
+        return true;
+      });
+      for (const property of uniqueProperties) {
+        try {
+          await this.addProperty(property);
+        } catch (e) {
+          console.log(`Property ${property.id} already exists, skipping...`);
+        }
+      }
+      console.log(`Seeded ${uniqueProperties.length} properties to database.`);
+    } else {
+      console.log("Database already has properties, skipping seed.");
     }
   }
 }
