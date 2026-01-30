@@ -41,3 +41,4 @@ waitForPort = 5000
 [userenv]
 
 [userenv.shared]
+smarthjem_db = "postgresql://smarthjem_db_user:8fkintTJ2zq1chMsvrlq7jdAZtPs2MF0@dpg-d5t73g4hg0os73a4068g-a.frankfurt-postgres.render.com/smarthjem_db"

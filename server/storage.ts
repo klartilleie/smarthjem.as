@@ -1400,4 +1400,166 @@ export class MemStorage implements IStorage {
   }
 }
 
-export const storage = new MemStorage();
+import { db } from "./db";
+import { properties as propertiesTable, users as usersTable } from "@shared/schema";
+import { eq } from "drizzle-orm";
+
+export class DatabaseStorage implements IStorage {
+  private contactForms: ContactForm[] = [];
+  private bookingRequests: BookingRequest[] = [];
+
+  async getUser(id: string): Promise<User | undefined> {
+    const [user] = await db.select().from(usersTable).where(eq(usersTable.id, id));
+    return user;
+  }
+
+  async getUserByUsername(username: string): Promise<User | undefined> {
+    const [user] = await db.select().from(usersTable).where(eq(usersTable.username, username));
+    return user;
+  }
+
+  async createUser(insertUser: InsertUser): Promise<User> {
+    const [user] = await db.insert(usersTable).values(insertUser).returning();
+    return user;
+  }
+
+  async getProperties(): Promise<Property[]> {
+    const dbProperties = await db.select().from(propertiesTable);
+    return dbProperties.map((p) => ({
+      id: p.id,
+      name: p.name,
+      description: p.description,
+      location: p.location,
+      beds: p.beds,
+      bathrooms: p.bathrooms,
+      maxGuests: p.maxGuests,
+      pricePerNight: p.pricePerNight,
+      images: p.images,
+      amenities: p.amenities,
+      available: p.available,
+      bookingUrl: p.bookingUrl ?? undefined,
+      externalUrl: p.externalUrl ?? undefined,
+    }));
+  }
+
+  async getProperty(id: string): Promise<Property | undefined> {
+    const [p] = await db.select().from(propertiesTable).where(eq(propertiesTable.id, id));
+    if (!p) return undefined;
+    return {
+      id: p.id,
+      name: p.name,
+      description: p.description,
+      location: p.location,
+      beds: p.beds,
+      bathrooms: p.bathrooms,
+      maxGuests: p.maxGuests,
+      pricePerNight: p.pricePerNight,
+      images: p.images,
+      amenities: p.amenities,
+      available: p.available,
+      bookingUrl: p.bookingUrl ?? undefined,
+      externalUrl: p.externalUrl ?? undefined,
+    };
+  }
+
+  async setProperties(properties: Property[]): Promise<void> {
+    await db.delete(propertiesTable);
+    if (properties.length > 0) {
+      await db.insert(propertiesTable).values(properties.map((p) => ({
+        id: p.id,
+        name: p.name,
+        description: p.description,
+        location: p.location,
+        beds: p.beds,
+        bathrooms: p.bathrooms,
+        maxGuests: p.maxGuests,
+        pricePerNight: p.pricePerNight,
+        images: p.images,
+        amenities: p.amenities,
+        available: p.available,
+        bookingUrl: p.bookingUrl ?? null,
+        externalUrl: p.externalUrl ?? null,
+      })));
+    }
+  }
+
+  async addProperty(property: Property): Promise<Property> {
+    await db.insert(propertiesTable).values({
+      id: property.id,
+      name: property.name,
+      description: property.description,
+      location: property.location,
+      beds: property.beds,
+      bathrooms: property.bathrooms,
+      maxGuests: property.maxGuests,
+      pricePerNight: property.pricePerNight,
+      images: property.images,
+      amenities: property.amenities,
+      available: property.available,
+      bookingUrl: property.bookingUrl ?? null,
+      externalUrl: property.externalUrl ?? null,
+    });
+    return property;
+  }
+
+  async updateProperty(id: string, updates: Partial<Property>): Promise<Property | undefined> {
+    const dbUpdates: Record<string, unknown> = {};
+    if (updates.name !== undefined) dbUpdates.name = updates.name;
+    if (updates.description !== undefined) dbUpdates.description = updates.description;
+    if (updates.location !== undefined) dbUpdates.location = updates.location;
+    if (updates.beds !== undefined) dbUpdates.beds = updates.beds;
+    if (updates.bathrooms !== undefined) dbUpdates.bathrooms = updates.bathrooms;
+    if (updates.maxGuests !== undefined) dbUpdates.maxGuests = updates.maxGuests;
+    if (updates.pricePerNight !== undefined) dbUpdates.pricePerNight = updates.pricePerNight;
+    if (updates.images !== undefined) dbUpdates.images = updates.images;
+    if (updates.amenities !== undefined) dbUpdates.amenities = updates.amenities;
+    if (updates.available !== undefined) dbUpdates.available = updates.available;
+    if (updates.bookingUrl !== undefined) dbUpdates.bookingUrl = updates.bookingUrl ?? null;
+    if (updates.externalUrl !== undefined) dbUpdates.externalUrl = updates.externalUrl ?? null;
+
+    const [updated] = await db.update(propertiesTable).set(dbUpdates).where(eq(propertiesTable.id, id)).returning();
+    if (!updated) return undefined;
+    
+    return {
+      id: updated.id,
+      name: updated.name,
+      description: updated.description,
+      location: updated.location,
+      beds: updated.beds,
+      bathrooms: updated.bathrooms,
+      maxGuests: updated.maxGuests,
+      pricePerNight: updated.pricePerNight,
+      images: updated.images,
+      amenities: updated.amenities,
+      available: updated.available,
+      bookingUrl: updated.bookingUrl ?? undefined,
+      externalUrl: updated.externalUrl ?? undefined,
+    };
+  }
+
+  async deleteProperty(id: string): Promise<boolean> {
+    const result = await db.delete(propertiesTable).where(eq(propertiesTable.id, id)).returning();
+    return result.length > 0;
+  }
+
+  async saveContactForm(form: ContactForm): Promise<void> {
+    this.contactForms.push(form);
+  }
+
+  async saveBookingRequest(booking: BookingRequest): Promise<void> {
+    this.bookingRequests.push(booking);
+  }
+
+  async seedFromMemory(): Promise<void> {
+    const existing = await db.select().from(propertiesTable).limit(1);
+    if (existing.length === 0) {
+      console.log("Database is empty, seeding with properties from memory...");
+      await this.setProperties(realProperties);
+      console.log(`Seeded ${realProperties.length} properties to database.`);
+    }
+  }
+}
+
+export const storage = new DatabaseStorage();
+
+export { realProperties };

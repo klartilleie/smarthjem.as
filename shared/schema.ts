@@ -17,6 +17,27 @@ export const insertUserSchema = createInsertSchema(users).pick({
 export type InsertUser = z.infer<typeof insertUserSchema>;
 export type User = typeof users.$inferSelect;
 
+// Properties table for PostgreSQL database
+export const properties = pgTable("properties", {
+  id: varchar("id").primaryKey(),
+  name: text("name").notNull(),
+  description: text("description").notNull(),
+  location: text("location").notNull(),
+  beds: integer("beds").notNull(),
+  bathrooms: integer("bathrooms").notNull(),
+  maxGuests: integer("max_guests").notNull(),
+  pricePerNight: doublePrecision("price_per_night").notNull().default(0),
+  images: text("images").array().notNull(),
+  amenities: text("amenities").array().notNull(),
+  available: boolean("available").notNull().default(true),
+  bookingUrl: text("booking_url"),
+  externalUrl: text("external_url"),
+});
+
+export const insertPropertySchema = createInsertSchema(properties);
+export type InsertProperty = z.infer<typeof insertPropertySchema>;
+export type DbProperty = typeof properties.$inferSelect;
+
 export const propertySchema = z.object({
   id: z.string(),
   name: z.string(),
