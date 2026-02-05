@@ -55,17 +55,6 @@ export default function Footer() {
           </div>
         </div>
 
-        <div className="flex justify-center mb-8">
-          <div className="p-4 rounded-xl bg-gradient-to-r from-amber-500/10 via-primary/10 to-amber-500/10 backdrop-blur-sm border border-primary/20">
-            <img 
-              src="/images/email-signature.gif" 
-              alt="Smart Hjem AS - Reiselivsadvokat" 
-              className="max-w-[280px] h-auto"
-              data-testid="img-email-signature"
-            />
-          </div>
-        </div>
-
         <div className="border-t border-border/50 pt-8 pb-8 flex flex-col items-center gap-6">
           <a 
             href="https://www.dropbox.com/request/9W81hTtZdazD7rp3k65n" 

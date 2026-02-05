@@ -297,6 +297,17 @@ export default function Contact() {
                 Vi svarer på alle henvendelser innen 24 timer på virkedager.
               </p>
             </div>
+
+            <Card className="border-primary/30 bg-gradient-to-br from-amber-500/10 via-primary/5 to-amber-500/10 backdrop-blur-sm overflow-hidden" data-testid="card-signature">
+              <CardContent className="p-4 flex justify-center">
+                <img 
+                  src="/images/email-signature.gif" 
+                  alt="Smart Hjem AS - Reiselivsadvokat" 
+                  className="max-w-full h-auto rounded-lg"
+                  data-testid="img-email-signature"
+                />
+              </CardContent>
+            </Card>
           </div>
         </div>
       </div>
