@@ -206,7 +206,7 @@ export async function registerRoutes(
   app.post("/api/admin/login", (req, res) => {
     const { email, password } = req.body;
     
-    if (email === ADMIN_EMAIL && password === ADMIN_PASSWORD) {
+    if (email?.toLowerCase() === ADMIN_EMAIL.toLowerCase() && password === ADMIN_PASSWORD) {
       req.session.isAdmin = true;
       req.session.adminEmail = email;
       res.json({ success: true, message: "Logged in successfully" });
