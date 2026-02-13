@@ -162,6 +162,14 @@ export const translations = {
         checkOut: "Se denne eiendommen",
       },
     },
+    propertyShowcase: {
+      badge: "Våre Eiendommer",
+      titleLine1: "Oppdag Våre",
+      titleLine2: "Tilgjengelige Eiendommer",
+      alsoOn: "Også tilgjengelig på:",
+      viewAll: "Vis Alle Eiendommer",
+      seePrices: "Se priser",
+    },
     amenityNames: {
       "WiFi": "WiFi",
       "Smart Lås": "Smart Lås",
@@ -365,6 +373,14 @@ export const translations = {
         checkOut: "Check out this property",
       },
     },
+    propertyShowcase: {
+      badge: "Our Properties",
+      titleLine1: "Discover Our",
+      titleLine2: "Available Properties",
+      alsoOn: "Also available on:",
+      viewAll: "View All Properties",
+      seePrices: "See prices",
+    },
     amenityNames: {
       "WiFi": "WiFi",
       "Smart Lås": "Smart Lock",
@@ -567,6 +583,14 @@ export const translations = {
         copiedDesc: "Sie können den Link jetzt überall einfügen.",
         checkOut: "Schauen Sie sich diese Unterkunft an",
       },
+    },
+    propertyShowcase: {
+      badge: "Unsere Unterkünfte",
+      titleLine1: "Entdecken Sie Unsere",
+      titleLine2: "Verfügbaren Unterkünfte",
+      alsoOn: "Auch verfügbar auf:",
+      viewAll: "Alle Unterkünfte Anzeigen",
+      seePrices: "Preise ansehen",
     },
     amenityNames: {
       "WiFi": "WLAN",

@@ -1,3 +1,4 @@
+import { useState, useEffect, useCallback, useRef } from "react";
 import { Link } from "wouter";
 import { useQuery } from "@tanstack/react-query";
 import { Card, CardContent } from "@/components/ui/card";
@@ -5,19 +6,80 @@ import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { Skeleton } from "@/components/ui/skeleton";
 import { MapPin, Users, Bed, ArrowRight } from "lucide-react";
+import { useLanguage } from "@/contexts/LanguageContext";
 import type { Property } from "@shared/schema";
 
+function shuffleArray<T>(arr: T[]): T[] {
+  const shuffled = [...arr];
+  for (let i = shuffled.length - 1; i > 0; i--) {
+    const j = Math.floor(Math.random() * (i + 1));
+    [shuffled[i], shuffled[j]] = [shuffled[j], shuffled[i]];
+  }
+  return shuffled;
+}
+
 export default function PropertyShowcase() {
+  const { t } = useLanguage();
   const { data: properties, isLoading } = useQuery<Property[]>({
     queryKey: ["/api/properties"],
   });
 
-  // Don't show section if no properties available
+  const allProperties = properties?.filter((p) => p.available !== false && p.images && p.images.length > 0) || [];
+
+  const [visibleCards, setVisibleCards] = useState<Property[]>([]);
+  const [fadingIndex, setFadingIndex] = useState<number | null>(null);
+  const poolRef = useRef<Property[]>([]);
+  const intervalRef = useRef<ReturnType<typeof setInterval> | null>(null);
+
+  useEffect(() => {
+    if (allProperties.length > 0 && visibleCards.length === 0) {
+      const shuffled = shuffleArray(allProperties);
+      setVisibleCards(shuffled.slice(0, 6));
+      poolRef.current = shuffled.slice(6);
+    }
+  }, [allProperties.length]);
+
+  const rotateOne = useCallback(() => {
+    if (allProperties.length <= 6) return;
+
+    const indexToReplace = Math.floor(Math.random() * 6);
+    setFadingIndex(indexToReplace);
+
+    setTimeout(() => {
+      setVisibleCards((prev) => {
+        if (poolRef.current.length === 0) {
+          const currentIds = new Set(prev.map((p) => p.id));
+          poolRef.current = shuffleArray(allProperties.filter((p) => !currentIds.has(p.id)));
+        }
+
+        const next = poolRef.current.shift();
+        if (!next) return prev;
+
+        const oldCard = prev[indexToReplace];
+        if (oldCard) {
+          poolRef.current.push(oldCard);
+        }
+
+        const updated = [...prev];
+        updated[indexToReplace] = next;
+        return updated;
+      });
+      setFadingIndex(null);
+    }, 400);
+  }, [allProperties]);
+
+  useEffect(() => {
+    if (allProperties.length <= 6) return;
+
+    intervalRef.current = setInterval(rotateOne, 5000);
+    return () => {
+      if (intervalRef.current) clearInterval(intervalRef.current);
+    };
+  }, [rotateOne, allProperties.length]);
+
   if (!isLoading && (!properties || properties.length === 0)) {
     return null;
   }
-
-  const featuredProperties = properties?.slice(0, 3) || [];
 
   return (
     <section
@@ -29,13 +91,13 @@ export default function PropertyShowcase() {
       <div className="max-w-7xl mx-auto px-6 sm:px-8 relative">
         <div className="flex flex-col md:flex-row md:items-end justify-between gap-6 flex-wrap mb-12 md:mb-16">
           <div>
-            <Badge variant="secondary" className="mb-6 px-4 py-1.5 text-sm">Våre Eiendommer</Badge>
+            <Badge variant="secondary" className="mb-6 px-4 py-1.5 text-sm">{t.propertyShowcase?.badge || "Våre Eiendommer"}</Badge>
             <h2 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-bold tracking-tight">
-              Oppdag Våre
-              <span className="block text-primary mt-2">Tilgjengelige Eiendommer</span>
+              {t.propertyShowcase?.titleLine1 || "Oppdag Våre"}
+              <span className="block text-primary mt-2">{t.propertyShowcase?.titleLine2 || "Tilgjengelige Eiendommer"}</span>
             </h2>
             <div className="flex flex-wrap items-center gap-2 mt-4 text-sm text-muted-foreground">
-              <span>Også tilgjengelig på:</span>
+              <span>{t.propertyShowcase?.alsoOn || "Også tilgjengelig på:"}</span>
               <Badge variant="outline" className="text-xs">Booking.com</Badge>
               <Badge variant="outline" className="text-xs">Airbnb</Badge>
               <Badge variant="outline" className="text-xs">Finn.no</Badge>
@@ -43,7 +105,7 @@ export default function PropertyShowcase() {
           </div>
           <Link href="/booking">
             <Button variant="outline" size="lg" className="gap-2" data-testid="button-view-all">
-              Vis Alle Eiendommer
+              {t.propertyShowcase?.viewAll || "Vis Alle Eiendommer"}
               <ArrowRight className="w-4 h-4" />
             </Button>
           </Link>
@@ -51,7 +113,7 @@ export default function PropertyShowcase() {
 
         {isLoading ? (
           <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6 lg:gap-8">
-            {[...Array(3)].map((_, i) => (
+            {[...Array(6)].map((_, i) => (
               <div key={i} className="space-y-4">
                 <Skeleton className="aspect-[4/3] rounded-lg" />
                 <Skeleton className="h-6 w-3/4" />
@@ -61,30 +123,27 @@ export default function PropertyShowcase() {
           </div>
         ) : (
           <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6 lg:gap-8">
-            {featuredProperties.map((property, index) => (
+            {visibleCards.map((property, index) => (
               <Card
                 key={property.id}
-                className="group overflow-hidden border-card-border bg-background/50 backdrop-blur-sm hover-elevate"
+                className={`group overflow-hidden border-card-border bg-background/50 backdrop-blur-sm hover-elevate transition-opacity duration-400 ${
+                  fadingIndex === index ? "opacity-0 scale-95" : "opacity-100 scale-100"
+                }`}
+                style={{ transition: "opacity 0.4s ease, transform 0.4s ease" }}
                 data-testid={`card-property-${index}`}
               >
                 <div className="relative aspect-[4/3] overflow-hidden">
-                  {property.images && property.images.length > 0 ? (
-                    <img
-                      src={property.images[0]}
-                      alt={property.name}
-                      className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
-                    />
-                  ) : (
-                    <div className="w-full h-full bg-muted flex items-center justify-center">
-                      <span className="text-muted-foreground">Ingen bilde</span>
-                    </div>
-                  )}
+                  <img
+                    src={property.images[0]}
+                    alt={property.name}
+                    className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
+                  />
                   <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent" />
                   <div className="absolute top-4 right-4">
                     <Badge className="bg-primary text-primary-foreground shadow-lg">
                       {property.pricePerNight > 0 
-                        ? `${property.location.includes("Spain") ? "€" : "kr"} ${property.pricePerNight.toLocaleString()}/natt`
-                        : "Se priser"}
+                        ? `${property.location.includes("Spain") ? "€" : "kr"} ${property.pricePerNight.toLocaleString()}${t.modal?.perNight || "/natt"}`
+                        : t.propertyShowcase?.seePrices || "Se priser"}
                     </Badge>
                   </div>
                   <div className="absolute bottom-4 left-4 right-4">
