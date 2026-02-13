@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { useQuery } from "@tanstack/react-query";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
@@ -26,10 +26,25 @@ export default function Booking() {
   const [locationFilter, setLocationFilter] = useState<string>("all");
   const [guestFilter, setGuestFilter] = useState<string>("all");
   const [showFilters, setShowFilters] = useState(false);
+  const [sharedPropertyHandled, setSharedPropertyHandled] = useState(false);
 
   const { data: properties, isLoading, error } = useQuery<Property[]>({
     queryKey: ["/api/properties"],
   });
+
+  useEffect(() => {
+    if (properties && !sharedPropertyHandled) {
+      const params = new URLSearchParams(window.location.search);
+      const propertyId = params.get("property");
+      if (propertyId) {
+        const found = properties.find((p) => p.id === propertyId);
+        if (found) {
+          setSelectedProperty(found);
+        }
+        setSharedPropertyHandled(true);
+      }
+    }
+  }, [properties, sharedPropertyHandled]);
 
   const availableProperties = properties?.filter((p) => p.available !== false) || [];
 

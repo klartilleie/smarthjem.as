@@ -154,6 +154,13 @@ export const translations = {
         error: "Noe gikk galt",
         errorDesc: "Vennligst prøv igjen senere.",
       },
+      share: {
+        title: "Del denne eiendommen",
+        copyLink: "Kopier lenke",
+        copied: "Lenke kopiert!",
+        copiedDesc: "Du kan nå lime inn lenken hvor du vil.",
+        checkOut: "Se denne eiendommen",
+      },
     },
     amenityNames: {
       "WiFi": "WiFi",
@@ -350,6 +357,13 @@ export const translations = {
         error: "Something went wrong",
         errorDesc: "Please try again later.",
       },
+      share: {
+        title: "Share this property",
+        copyLink: "Copy link",
+        copied: "Link copied!",
+        copiedDesc: "You can now paste the link wherever you want.",
+        checkOut: "Check out this property",
+      },
     },
     amenityNames: {
       "WiFi": "WiFi",
@@ -545,6 +559,13 @@ export const translations = {
         successDesc: "Wir senden Ihnen eine Bestätigung per E-Mail.",
         error: "Etwas ist schief gelaufen",
         errorDesc: "Bitte versuchen Sie es später erneut.",
+      },
+      share: {
+        title: "Diese Unterkunft teilen",
+        copyLink: "Link kopieren",
+        copied: "Link kopiert!",
+        copiedDesc: "Sie können den Link jetzt überall einfügen.",
+        checkOut: "Schauen Sie sich diese Unterkunft an",
       },
     },
     amenityNames: {

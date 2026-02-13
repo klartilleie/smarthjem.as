@@ -25,8 +25,9 @@ import {
   ChevronLeft, ChevronRight, CheckCircle, Tv, Dog, Trees, Home,
   UtensilsCrossed, Flame, WashingMachine, Waves, Anchor, Baby,
   Heart, Sun, Snowflake, Coffee, Sofa, Wind, Shirt, GlassWater,
-  Fence, Umbrella
+  Fence, Umbrella, Share2, Copy, Mail, Link2
 } from "lucide-react";
+import { SiFacebook, SiWhatsapp } from "react-icons/si";
 
 interface PropertyModalProps {
   property: Property | null;
@@ -500,7 +501,7 @@ export default function PropertyModal({ property, open, onClose }: PropertyModal
                 <p className="text-sm text-muted-foreground">{t.modal.cleaningFeeNote}</p>
               </div>
 
-              <div className="mt-8 flex flex-col gap-3">
+              <div className="mt-8 flex flex-col gap-4">
                 <Button
                   className="w-full"
                   size="lg"
@@ -510,6 +511,72 @@ export default function PropertyModal({ property, open, onClose }: PropertyModal
                 >
                   {property.available ? t.modal.sendBookingRequest : t.modal.notAvailable}
                 </Button>
+
+                <div>
+                  <p className="text-sm text-muted-foreground mb-2 flex items-center gap-1.5">
+                    <Share2 className="w-4 h-4" />
+                    {t.modal.share?.title || "Del denne eiendommen"}
+                  </p>
+                  <div className="flex flex-wrap gap-2">
+                    <Button
+                      variant="outline"
+                      size="sm"
+                      className="gap-2"
+                      data-testid="button-share-copy"
+                      onClick={() => {
+                        const url = `${window.location.origin}/booking?property=${property.id}`;
+                        navigator.clipboard.writeText(url).then(() => {
+                          toast({ title: t.modal.share?.copied || "Lenke kopiert!", description: t.modal.share?.copiedDesc || "Du kan nå lime inn lenken hvor du vil." });
+                        });
+                      }}
+                    >
+                      <Copy className="w-4 h-4" />
+                      {t.modal.share?.copyLink || "Kopier lenke"}
+                    </Button>
+                    <Button
+                      variant="outline"
+                      size="sm"
+                      className="gap-2"
+                      data-testid="button-share-whatsapp"
+                      onClick={() => {
+                        const url = `${window.location.origin}/booking?property=${property.id}`;
+                        const text = `${t.modal.share?.checkOut || "Se denne eiendommen"}: ${property.name} - ${property.location}`;
+                        window.open(`https://wa.me/?text=${encodeURIComponent(text + "\n" + url)}`, "_blank");
+                      }}
+                    >
+                      <SiWhatsapp className="w-4 h-4" />
+                      WhatsApp
+                    </Button>
+                    <Button
+                      variant="outline"
+                      size="sm"
+                      className="gap-2"
+                      data-testid="button-share-facebook"
+                      onClick={() => {
+                        const url = `${window.location.origin}/booking?property=${property.id}`;
+                        window.open(`https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(url)}`, "_blank", "width=600,height=400");
+                      }}
+                    >
+                      <SiFacebook className="w-4 h-4" />
+                      Facebook
+                    </Button>
+                    <Button
+                      variant="outline"
+                      size="sm"
+                      className="gap-2"
+                      data-testid="button-share-email"
+                      onClick={() => {
+                        const url = `${window.location.origin}/booking?property=${property.id}`;
+                        const subject = `${property.name} - Smart Hjem AS`;
+                        const body = `${t.modal.share?.checkOut || "Se denne eiendommen"}: ${property.name}\n${property.location}\n\n${url}`;
+                        window.open(`mailto:?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`);
+                      }}
+                    >
+                      <Mail className="w-4 h-4" />
+                      E-post
+                    </Button>
+                  </div>
+                </div>
               </div>
             </>
           )}
